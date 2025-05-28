@@ -1,0 +1,37 @@
+# Ignore para projetos Java
+**/target/
+**/out/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Ignore para projetos Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv
+*.sqlite3
+
+# Ignore para projetos em C
+*.o
+*.out
+*.exe
+*.a
+*.so
+
+# Ignore genérico
+.DS_Store
+*.swp
+*~
+*.bak
+*.tmp
+.idea/
+.vscode/
+*.iml
