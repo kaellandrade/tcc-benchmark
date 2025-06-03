@@ -1,9 +1,5 @@
 import ConstantTimeAlgorithms
-
-
-def repeatAlgorithm(count, algorithm, *args):
-    for i in range(count):
-        algorithm(*args)
+import Utils
 
 
 def runCheck():
@@ -29,35 +25,35 @@ def runBenchmark(iterationCount: int):
     array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     dictionary = {'a': 'aaa', 'b': 'bbb', 'c': 'ccc', 'd': 'ddd', 'e': 'eee'}
 
-    repeatAlgorithm(
+    Utils.repeatAlgorithm(
         iterationCount, 
         ConstantTimeAlgorithms.accessArray, 
         array, 
         6
     )
-    repeatAlgorithm(
+    Utils.repeatAlgorithm(
         iterationCount, 
         ConstantTimeAlgorithms.pushElementToEndOfStack, 
         array, 
         777
     )
-    repeatAlgorithm(
+    Utils.repeatAlgorithm(
         iterationCount, 
         ConstantTimeAlgorithms.popElementFromEndOfStack, 
         array
     )
-    repeatAlgorithm(
+    Utils.repeatAlgorithm(
         iterationCount, 
         ConstantTimeAlgorithms.isEven, 
         4
     )
-    repeatAlgorithm(
+    Utils.repeatAlgorithm(
         iterationCount, 
         ConstantTimeAlgorithms.swapValueXY, 
         1, 
         2
     )
-    repeatAlgorithm(
+    Utils.repeatAlgorithm(
         iterationCount, 
         ConstantTimeAlgorithms.searchInDict, 
         dictionary, 
