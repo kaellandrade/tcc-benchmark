@@ -1,4 +1,5 @@
-import BenchmarkConstantTimeAlgorithms
+from ConstantTime import BenchmarkConstantTimeAlgorithms
+
 
 print("Running 'main.py':")
 
