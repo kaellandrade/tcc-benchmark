@@ -1,14 +1,33 @@
+import java.util.PriorityQueue;
+
 public class AlgoritmosLogN {
+    static final int LENGTH_INSERT_HEAPIFY = 10;
     static final int ARRAY_LENGTH = 100000;
     static final int[] ARRAY_ORDENADO = new int[ARRAY_LENGTH];
 
     public static void main(String[] args) {
+        AlgoritmosLogN.testBuscaBinaria();
+        AlgoritmosLogN.testHeapify();
+    }
+
+    private static void testHeapify() {
+        PriorityQueue<Integer> heap = new PriorityQueue<>();
+
+        // preenchendo a Heapify
+        for (int i = 0; i < LENGTH_INSERT_HEAPIFY; i++)
+            heap.add(i);
+
+        System.out.println(heap.poll());
+    }
+
+    private static void testBuscaBinaria() {
         AlgoritmosLogN.iniciarArrayOrdenado();
         int valorProcurado = 20000;
         int indexResult = AlgoritmosLogN.buscaBinaria(ARRAY_ORDENADO, valorProcurado);
-        if (indexResult != -1) 
+        if (indexResult != -1)
             System.out.println(ARRAY_ORDENADO[indexResult] == valorProcurado);
-        else System.out.println("Não existe no array!");
+        else
+            System.out.println("Não existe no array!");
     }
 
     static private void iniciarArrayOrdenado() {

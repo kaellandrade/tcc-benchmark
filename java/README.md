@@ -10,8 +10,8 @@
 
 ## 2. O(log n) — Logarítimica
 
-- [ ] Busca Binária	
-- [ ] Heapify em uma heap binária
+- [X] Busca Binária	
+- [x] Heapify em uma heap binária
 - [ ] Contagem de bits em um número com técnicas de bitwise
 - [ ] Encontrar potência usando exponenciação rápida
 - [ ] Inserção/remoção em árvore balanceada (AVL, Red-Black)	
