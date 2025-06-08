@@ -7,3 +7,11 @@
 - [X] Verificar se número é par `n % 2 == 0` 
 - [X] Trocar dois valores de variáveis
 - [X] Buscar em `dict` ou `hash map`
+
+## 2. O(log n) — Logarítimica
+
+- [ ] Busca Binária	
+- [ ] Inserção/remoção em árvore balanceada (AVL, Red-Black)	
+- [ ] Heapify em uma heap binária
+- [ ] Encontrar potência usando exponenciação rápida
+- [ ] Contagem de bits em um número com técnicas de bitwise

@@ -2,17 +2,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class AlgotimosConstantes {
+public class AlgoritmosConstantes {
     static final int N_VEZES = 1000;
     static final Map<Integer, String> hashMap = new HashMap<>(N_VEZES);
 
     public static void main(String[] args) {
 
-        // AlgotimosConstantes.testarParNVezes(N_VEZES);
-        // AlgotimosConstantes.trocarValorNVezes(N_VEZES);
-        // AlgotimosConstantes.acessarElementoArrayNvezes(N_VEZES);
-        // AlgotimosConstantes.inserirRemovePilha(N_VEZES);
-        AlgotimosConstantes.acessoHashMap(N_VEZES);
+        AlgoritmosConstantes.testarParNVezes(N_VEZES);
+        AlgoritmosConstantes.trocarValorNVezes(N_VEZES);
+        AlgoritmosConstantes.acessarElementoArrayNvezes(N_VEZES);
+        AlgoritmosConstantes.inserirRemovePilha(N_VEZES);
+        AlgoritmosConstantes.acessoHashMap(N_VEZES);
 
     }
 
@@ -72,7 +72,7 @@ public class AlgotimosConstantes {
     private static void acessoHashMap(int N) {
 
         for (Integer i = 0; i < N; i++) {
-            String item = AlgotimosConstantes.hashMap.get(i);
+            String item = AlgoritmosConstantes.hashMap.get(i);
             System.out.println("Valor: " + item);
         }
 
