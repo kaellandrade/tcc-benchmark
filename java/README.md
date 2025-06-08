@@ -11,7 +11,7 @@
 ## 2. O(log n) — Logarítimica
 
 - [ ] Busca Binária	
-- [ ] Inserção/remoção em árvore balanceada (AVL, Red-Black)	
 - [ ] Heapify em uma heap binária
-- [ ] Encontrar potência usando exponenciação rápida
 - [ ] Contagem de bits em um número com técnicas de bitwise
+- [ ] Encontrar potência usando exponenciação rápida
+- [ ] Inserção/remoção em árvore balanceada (AVL, Red-Black)	
