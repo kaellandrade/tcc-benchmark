@@ -9,4 +9,4 @@ BENCHMARK_ITERATIONS = 5
 # BenchmarkConstantTimeAlgorithms.runCheck()
 # BenchmarkConstantTimeAlgorithms.runBenchmark(BENCHMARK_ITERATIONS)
 
-BenchmarkLogarithmicTimeAlgorithms.runBenchmark(5)
+BenchmarkLogarithmicTimeAlgorithms.runCheck()
