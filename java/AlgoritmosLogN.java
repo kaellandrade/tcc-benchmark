@@ -4,10 +4,13 @@ public class AlgoritmosLogN {
     static final int LENGTH_INSERT_HEAPIFY = 10;
     static final int ARRAY_LENGTH = 100000;
     static final int[] ARRAY_ORDENADO = new int[ARRAY_LENGTH];
+    static final int BITWISE_NUMBER= 342343; // em binário é 1010011100101000111
 
     public static void main(String[] args) {
         AlgoritmosLogN.testBuscaBinaria();
-        AlgoritmosLogN.testHeapify();
+        // AlgoritmosLogN.testHeapify();
+        int totalBits = AlgoritmosLogN.countSetBits(BITWISE_NUMBER);
+        System.out.println(totalBits);
     }
 
     private static void testHeapify() {
@@ -58,6 +61,26 @@ public class AlgoritmosLogN {
 
         return -1;
 
+    }
+
+    /**
+     * Pega um número inteiro e retorna todos os bits ativos em sua representação binária.
+     * 
+     * Time Complexity: O(log n) 
+     * Auxiliary Space: O(1)
+     * 
+     * Referências: https://www.geeksforgeeks.org/dsa/count-set-bits-in-an-integer/
+     * @param n
+     * @return
+     */
+    static private int countSetBits(int n) {
+        int totalBits1 = 0;
+        while (n > 0) {
+            totalBits1 += n & 1;
+            n >>= 1;
+        }
+
+        return totalBits1;
     }
 
 }
