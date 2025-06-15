@@ -2,6 +2,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * TODO: Refatorar também essa classe para utilizar o SimpleBenchmark
+ */
 public class AlgoritmosConstantes {
     static final int N_VEZES = 1000;
     static final Map<Integer, String> hashMap = new HashMap<>(N_VEZES);
