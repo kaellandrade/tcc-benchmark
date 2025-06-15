@@ -1,19 +1,45 @@
 import java.util.PriorityQueue;
 
 public class AlgoritmosLogN {
-    static final int LENGTH_INSERT_HEAPIFY = 10;
-    static final int ARRAY_LENGTH = 100000;
+    static final int LENGTH_INSERT_HEAPIFY = 1000;
+    static final int ARRAY_LENGTH = 536871066;
     static final int[] ARRAY_ORDENADO = new int[ARRAY_LENGTH];
     static final int BITWISE_NUMBER = 342343; // em binário é 1010011100101000111
 
     public static void main(String[] args) {
-        // AlgoritmosLogN.testBuscaBinaria();
-        // AlgoritmosLogN.testHeapify();
+        // Naive Benchmark
+        // Marca o tempo de início
+
+        long tempoInicial = System.nanoTime(); 
+        Runtime runtime = Runtime.getRuntime();
+        
+        // Roda o coletor de lixo para tentar limpar a memória antes da medição
+        System.gc();
+        long memoriaUsadaAntes = runtime.totalMemory() - runtime.freeMemory();
+
+        // ------------------ALTORITMOS---------------------------------------
+        AlgoritmosLogN.testHeapify();
         // int totalBits = AlgoritmosLogN.countSetBits(BITWISE_NUMBER);
         // System.out.println(totalBits);
 
-        long resultadoBaseExp = AlgoritmosLogN.exponentiatingBysquaring(3,10);
-        System.out.println(resultadoBaseExp);;
+        // long resultadoBaseExp = AlgoritmosLogN.exponentiatingBysquaring(3, 10);
+        // System.out.println(resultadoBaseExp);
+
+
+
+        long memoriaUsadaDepois = runtime.totalMemory() - runtime.freeMemory();
+
+        long memoriaConsumida = memoriaUsadaDepois - memoriaUsadaAntes;
+        double memoriaEmMegabytes = memoriaConsumida / (1024.0 * 1024.0);
+
+        long tempoFinal = System.nanoTime(); // Marca o tempo de fim
+
+        long duracaoEmNanosegundos = tempoFinal - tempoInicial;
+        double duracaoEmMilissegundos = duracaoEmNanosegundos / 1_000_000.0;
+
+        System.out.printf("Memória consumida pelo algoritmo: %.3f MB%n", memoriaEmMegabytes);
+        System.out.printf("Tempo de execução: %.3f milissegundos%n", duracaoEmMilissegundos);
+
     }
 
     private static void testHeapify() {
@@ -88,11 +114,11 @@ public class AlgoritmosLogN {
         return totalBits1;
     }
 
-   public static long exponentiatingBysquaring(long base, long expoente) {
+    public static long exponentiatingBysquaring(long base, long expoente) {
         if (expoente < 0) {
             throw new IllegalArgumentException("Expoente não pode ser negativo.");
         }
-        
+
         long resultado = 1L; // Inicializa o resultado como 1 (L indica que é um long)
 
         while (expoente > 0) {
