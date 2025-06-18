@@ -26,14 +26,14 @@ public class MainBenchmarkConstantes {
     private int[] dataForSwap;
 
     // Um array bem grande para tornar os efeitos de cache mais visíveis
-    private final int ARRAY_SIZE = 10_000_000;
+    private final int ARRAY_SIZE = 10_000;
     private int[] dataArray;
 
     // Usaremos @Param para testar o acesso no início, meio e fim do array
-    @Param({ "0", "4999999", "9999999" })
+    @Param({ "0", "50", "9999" })
     private int indexToAccess;
 
-    @Param({ "100", "10000", "1000000" })
+    @Param({ "10", "100", "1000" })
     private int initialSize;
 
     private Stack<String> originalPilha; // O "molde"
@@ -43,7 +43,7 @@ public class MainBenchmarkConstantes {
     static Map<Integer, String> hashMap;
 
     @Setup(Level.Trial)
-    public void setupPilha() {
+    public void setupTrial() {
         // 1. Criamos o molde uma vez
         originalPilha = new Stack<>();
         for (int i = 0; i < initialSize; i++) {
