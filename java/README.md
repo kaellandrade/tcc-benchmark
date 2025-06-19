@@ -3,7 +3,7 @@
 1. Vá para `/benchmark-algoritmos-tcc`;
 2. Compile o projeto com maven `mvn clean install`;
 3. Execute o benchmark especificando os params de metricas e saida no JSON. Ex:
-` java -jar target/benchmarks.jar -prof gc -prof stack -rf json -rff results.json`;W
+` java -jar target/benchmarks.jar -prof gc -prof stack -rf json -rff results.json`;
 4. Isso irá gerar um arquivo `benchmark-algoritmos-tcc/results.json`;
 5. Utilize a platagorma https://jmh.morethan.io para analizar o `results.json` .
 
