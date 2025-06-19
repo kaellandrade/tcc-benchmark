@@ -49,8 +49,8 @@ public class AlgoritmosConstantes {
      * Remove o elemento da pilha
      * @param pilha
      */
-    public static void removerNaPilha(Stack<String> pilha) {
-        pilha.pop();
+    public static String removerNaPilha(Stack<String> pilha) {
+        return pilha.pop();
 
     }
 
