@@ -19,7 +19,7 @@ public class AlgoritmosLineares {
     }
 
     /**
-     * O(n/1) -> O(n)
+     * O(n/2) -> O(n)
      * @param palavra1
      * @return
      */
