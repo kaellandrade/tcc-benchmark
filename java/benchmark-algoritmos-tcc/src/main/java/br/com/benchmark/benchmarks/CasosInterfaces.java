@@ -12,6 +12,6 @@ public interface CasosInterfaces {
     public void casoMedio(Blackhole bh);
 
     @Benchmark
-    public void piorCasoEncontrado(Blackhole bh);
+    public void piorCaso(Blackhole bh);
 
 }

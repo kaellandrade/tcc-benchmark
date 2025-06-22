@@ -20,7 +20,7 @@ public class BuscaLinear extends BaseBuscaAbstract implements CasosInterfaces {
     }
 
     @Benchmark
-    public void piorCasoEncontrado(Blackhole bh) {
+    public void piorCaso(Blackhole bh) {
         bh.consume(AlgoritmosLineares.buscaLinear(array, elementoPiorCaso));
     }
 }
