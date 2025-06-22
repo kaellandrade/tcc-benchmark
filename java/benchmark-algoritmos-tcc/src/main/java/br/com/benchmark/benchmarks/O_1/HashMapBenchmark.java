@@ -2,7 +2,6 @@ package br.com.benchmark.benchmarks.O_1;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.openjdk.jmh.annotations.Benchmark;

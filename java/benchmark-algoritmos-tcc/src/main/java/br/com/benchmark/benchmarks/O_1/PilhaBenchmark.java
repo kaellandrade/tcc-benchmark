@@ -14,13 +14,12 @@ import br.com.benchmark.benchmarks.BaseBenchmark;
 public class PilhaBenchmark extends BaseBenchmark {
 
     private Stack<String> originalPilha;
-    private Stack<String> pilhaParaTeste; // Pilha usada em cada invocação para evitar contaminação
     private static final String ELEMENTO_PARA_INSERIR = "Novo Elemento";
 
     @Param({ "100", "1000" })
     private int initialSize;
 
-    @Setup(Level.Trial)
+    @Setup(Level.Invocation)
     public void setupTrialState() {
 
         // Setup para a pilha original
@@ -34,14 +33,14 @@ public class PilhaBenchmark extends BaseBenchmark {
     @Benchmark
     public void push_O_1(Blackhole bh) {
         // Opera na cópia da pilha (pilhaParaTeste) para não contaminar o estado.
-        AlgoritmosConstantes.inserirNaPilha(ELEMENTO_PARA_INSERIR, pilhaParaTeste);
+        AlgoritmosConstantes.inserirNaPilha(ELEMENTO_PARA_INSERIR, originalPilha);
         // Consumir a pilha garante que a operação não seja eliminada.
-        bh.consume(pilhaParaTeste);
+        bh.consume(originalPilha);
     }
 
     @Benchmark
     public void pop_O_1(Blackhole bh) {
-        bh.consume(AlgoritmosConstantes.removerNaPilha(pilhaParaTeste));
+        bh.consume(AlgoritmosConstantes.removerNaPilha(originalPilha));
     }
 
 }

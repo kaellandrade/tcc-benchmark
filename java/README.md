@@ -25,3 +25,11 @@
 - [X] Contagem de bits em um número com técnicas de bitwise
 - [X] Encontrar potência usando exponenciação rápida
 - [ ] Inserção/remoção em árvore balanceada (AVL, Red-Black)	
+
+## 3. O(n) — Linear
+
+- [X] Busca Linear
+- [x] Soma de elementos de um array
+- [X] Verificação de palíndromo
+- [ ] Contar frequência de elementos
+- [ ] Remoção de duplicatas com set

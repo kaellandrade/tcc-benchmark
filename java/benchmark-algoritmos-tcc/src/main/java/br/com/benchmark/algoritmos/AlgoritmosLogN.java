@@ -1,8 +1,8 @@
 package br.com.benchmark.algoritmos;
-public final class LogNAlgorithms {
+public final class AlgoritmosLogN {
 
    
-    private LogNAlgorithms() {}
+    private AlgoritmosLogN() {}
 
     /**
      * Encontra o índice de um valor em um array ordenado.
