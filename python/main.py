@@ -105,7 +105,7 @@ if(CREATE_JSON_FILE):
         }
     }
 
-    output_dir = './ExecutedBenchamrks'
+    output_dir = './ExecutedBenchmarks'
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, 'benchmark_result.json')
 
