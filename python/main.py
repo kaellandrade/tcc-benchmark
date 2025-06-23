@@ -4,7 +4,7 @@ import threading
 import time
 import psutil
 import os
-
+import json
 
 print("Running 'main.py':")
 BENCHMARK_ITERATIONS = 5000000
@@ -17,6 +17,7 @@ done = False
 
 # CPU Time START
 cpuTimesBefore = process.cpu_times()
+startWallTime = time.time()  # Start Wall Time
 
 # Memory Usage START
 memUsages = []
@@ -52,14 +53,21 @@ monitorCpuUsageThread.join()
 
 # CPU Time END
 cpuTimesAfter = process.cpu_times()
+endWallTime = time.time()  # End Wall Time
+
 cpuUser = cpuTimesAfter.user - cpuTimesBefore.user
 cpuSystem = cpuTimesAfter.system - cpuTimesBefore.system
 cpuTotal = cpuUser + cpuSystem
+totalWallTime = endWallTime - startWallTime
 
 # Memory Usage END
 maxMem = max(memUsages)
 avgMem = sum(memUsages) / len(memUsages)
 
+# CPU Usage report
+flattenedCpuUsages = [usage for snapshot in cpuUsages for usage in snapshot]
+cpuMaxUsage = max(flattenedCpuUsages)
+cpuAvgUsage = sum(flattenedCpuUsages) / len(flattenedCpuUsages)
 
 # CPU Time report
 print(f"Tempo de CPU (modo usuário): {cpuUser:.4f} segundos")
@@ -75,3 +83,32 @@ idx = 0
 for usage in cpuUsages:
     print(f"Uso de CPU por núcleo no instante {idx*0.1:.2f}s:", usage)
     idx += 1
+
+CREATE_JSON_FILE = True
+if(CREATE_JSON_FILE):
+    result = {
+        "algorithm": "QuickSort",
+        "device": "Desktop",
+        "cpu": "Intel Core i7-9700K",
+        "cpuClockSpeed": 3600,
+        "cpuThreadsCount": 8,
+        "memory": "16GB DDR4",
+        "memoryDdr": 4,
+        "performance": {
+            "cpuTime": round(cpuTotal, 2),
+            "totalTime": round(totalWallTime, 2),
+            "cpuMaxUsage": round(cpuMaxUsage, 2),
+            "cpuAverageUsage": round(cpuAvgUsage, 2),
+            "memoryMaxUsage": round(maxMem, 2),
+            "memoryAverageUsage": round(avgMem, 2)
+        }
+    }
+
+    output_dir = './ExcecutedBenchamrks'
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, 'benchmark_result.json')
+
+    with open(output_path, 'w') as f:
+        json.dump(result, f, indent=2)
+
+    print(f"Arquivo JSON '{output_path}' criado.")
