@@ -17,29 +17,25 @@ done = False
 
 # CPU Time START
 cpuTimesBefore = process.cpu_times()
-startWallTime = time.time()  # Start Wall Time
+startWallTime = time.time()
 
 # Memory Usage START
 memUsages = []
-
-def monitorMemory():
+def monitorMemory(): # captura o uso de memoria RAM a cada 0.1s
     while not done:
         mem = process.memory_info().rss / (1024 ** 2)
         memUsages.append(mem)
         time.sleep(0.1)
-
 memoryMonitorThread = threading.Thread(target=monitorMemory)
 memoryMonitorThread.start()
 
 # CPU Usage START
 cpuUsages = []
-
 def monitorCpuUsage():
     while not done:
-        cpuPercentPerCore = psutil.cpu_percent(interval=0, percpu=True)
+        cpuPercentPerCore = psutil.cpu_percent(interval=0.1, percpu=True)
         cpuUsages.append(cpuPercentPerCore)
         time.sleep(0.1)
-
 monitorCpuUsageThread = threading.Thread(target=monitorCpuUsage)
 monitorCpuUsageThread.start()
 
@@ -53,7 +49,7 @@ monitorCpuUsageThread.join()
 
 # CPU Time END
 cpuTimesAfter = process.cpu_times()
-endWallTime = time.time()  # End Wall Time
+endWallTime = time.time()
 
 cpuUser = cpuTimesAfter.user - cpuTimesBefore.user
 cpuSystem = cpuTimesAfter.system - cpuTimesBefore.system
@@ -64,25 +60,30 @@ totalWallTime = endWallTime - startWallTime
 maxMem = max(memUsages)
 avgMem = sum(memUsages) / len(memUsages)
 
-# CPU Usage report
+# CPU Usage END
 flattenedCpuUsages = [usage for snapshot in cpuUsages for usage in snapshot]
 cpuMaxUsage = max(flattenedCpuUsages)
 cpuAvgUsage = sum(flattenedCpuUsages) / len(flattenedCpuUsages)
+
 
 # CPU Time report
 print(f"Tempo de CPU (modo usuário): {cpuUser:.4f} segundos")
 print(f"Tempo de CPU (modo sistema): {cpuSystem:.4f} segundos")
 print(f"Tempo total de CPU usado: {cpuTotal:.4f} segundos")
+print(f"Tempo total percebido pelo usuário: {totalWallTime:.4f} segundos")
+print("")
 
 # Memory Usage report
 print(f"Uso máximo de RAM: {maxMem:.2f} MB")
 print(f"Uso médio de RAM: {avgMem:.2f} MB")
+print("")
 
 # CPU Usage report
 idx = 0
 for usage in cpuUsages:
     print(f"Uso de CPU por núcleo no instante {idx*0.1:.2f}s:", usage)
     idx += 1
+print("")
 
 CREATE_JSON_FILE = True
 if(CREATE_JSON_FILE):
