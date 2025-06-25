@@ -1,5 +1,6 @@
 from ConstantTime import BenchmarkConstantTimeAlgorithms
 from LogarithmicTime import BenchmarkLogarithmicTimeAlgorithms
+from LinearTime import BenchmarkLinearTimeAlgorithms
 import threading
 import time
 import psutil
@@ -41,7 +42,9 @@ monitorCpuUsageThread.start()
 
 
 # Running the algorithm..
-BenchmarkLogarithmicTimeAlgorithms.runBenchmark(BENCHMARK_ITERATIONS)
+# BenchmarkLogarithmicTimeAlgorithms.runBenchmark(BENCHMARK_ITERATIONS)
+# BenchmarkLinearTimeAlgorithms.runCheck()
+BenchmarkLinearTimeAlgorithms.runBenchmark(BENCHMARK_ITERATIONS)
 done = True
 memoryMonitorThread.join()
 monitorCpuUsageThread.join()
