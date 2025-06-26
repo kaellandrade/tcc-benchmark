@@ -31,5 +31,5 @@
 - [X] Busca Linear
 - [x] Soma de elementos de um array
 - [X] Verificação de palíndromo
-- [ ] Contar frequência de elementos
+- [X] Contar frequência de elementos
 - [ ] Remoção de duplicatas com set

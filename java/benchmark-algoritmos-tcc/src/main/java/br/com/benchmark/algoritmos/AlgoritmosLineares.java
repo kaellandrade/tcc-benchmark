@@ -1,5 +1,8 @@
 package br.com.benchmark.algoritmos;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AlgoritmosLineares {
 
     public static int buscaLinear(int[] array, int n) {
@@ -20,6 +23,7 @@ public class AlgoritmosLineares {
 
     /**
      * O(n/2) -> O(n)
+     * 
      * @param palavra1
      * @return
      */
@@ -36,6 +40,20 @@ public class AlgoritmosLineares {
             j--;
         }
         return true;
+    }
+
+    public static Map<String, Integer> contarFrequencia(String[] elementos) {
+        Map<String, Integer> mapContador = new HashMap<>();
+        for (String valor : elementos) {
+            Integer contador = mapContador.get(valor);
+            if (contador == null) {
+                mapContador.put(valor, 1);
+                continue;
+            }
+            mapContador.put(valor, ++contador);
+
+        }
+        return mapContador;
     }
 
 }
