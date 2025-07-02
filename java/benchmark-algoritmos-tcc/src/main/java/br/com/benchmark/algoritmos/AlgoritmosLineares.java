@@ -22,9 +22,6 @@ public class AlgoritmosLineares {
 
     /**
      * O(n/2) -> O(n)
-     * 
-     * @param palavra1
-     * @return
      */
     public static boolean isPalindromo(String palavra1) {
         int lengthPalavra1 = palavra1.length();

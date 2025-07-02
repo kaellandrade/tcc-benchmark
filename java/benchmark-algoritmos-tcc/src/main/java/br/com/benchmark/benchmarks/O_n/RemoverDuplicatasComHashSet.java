@@ -11,7 +11,6 @@ import org.openjdk.jmh.infra.Blackhole;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class RemoverDuplicatasComHashSet extends BaseBenchmark {
 
