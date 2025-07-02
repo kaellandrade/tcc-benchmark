@@ -2,10 +2,10 @@
 
 1. Vá para `/benchmark-algoritmos-tcc`;
 2. Compile o projeto com maven `mvn clean install`;
-3. Execute o benchmark especificando os params de metricas e saida no JSON. Ex:
+3. Execute o benchmark especificando os params de métricas e saida no JSON. Ex:
 ` java -jar target/benchmarks.jar -prof gc -prof stack -rf json -rff results.json`;
 4. Isso irá gerar um arquivo `benchmark-algoritmos-tcc/results.json`;
-5. Utilize a platagorma https://jmh.morethan.io para analizar o `results.json` .
+5. Utilize a plataforma https://jmh.morethan.io para analisar o `results.json` .
 
 
 ## TODOs JAVA
@@ -18,7 +18,7 @@
 - [X] Trocar dois valores de variáveis
 - [X] Buscar em `dict` ou `hash map`
 
-## 2. O(log n) — Logarítimica
+## 2. O(log n) — Logarítmica
 
 - [X] Busca Binária	
 - [x] Heapify em uma heap binária
@@ -32,4 +32,4 @@
 - [x] Soma de elementos de um array
 - [X] Verificação de palíndromo
 - [X] Contar frequência de elementos
-- [ ] Remoção de duplicatas com set
+- [X] Remoção de duplicatas com set
