@@ -8,29 +8,33 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.infra.Blackhole;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
-public class ContarFrequenciaComHashMap extends BaseBenchmark {
+public class RemoverDuplicatasComHashSet extends BaseBenchmark {
 
-    @Param({"100000"})
+    @Param({"1000"})
     protected int lengthArray;
-    String[] array;
+    String[] possveisDuplicados;
+
+    private List<String> list;
 
     @Setup(Level.Trial)
     public void setup() {
-        array = new String[lengthArray];
+        possveisDuplicados = new String[lengthArray];
         Random random = new Random();
         for (int i = 0; i < lengthArray; i++) {
             int valorAleatorio = random.nextInt(lengthArray);
-            array[i] = String.valueOf(valorAleatorio);
+            possveisDuplicados[i] = String.valueOf(valorAleatorio);
         }
-
+        list = Arrays.asList(possveisDuplicados);
     }
 
     @Benchmark
-    public void contadorFrequencia(Blackhole bh) {
-        AlgoritmosLineares.contarFrequencia(array);
-        bh.consume(AlgoritmosLineares.contarFrequencia(array));
+    public void removerDuplicatas(Blackhole bh) {
+        bh.consume(AlgoritmosLineares.removerDuplicadasComSet(list));
     }
 
 }

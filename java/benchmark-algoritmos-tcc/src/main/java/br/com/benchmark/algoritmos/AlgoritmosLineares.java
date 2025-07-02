@@ -1,7 +1,6 @@
 package br.com.benchmark.algoritmos;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AlgoritmosLineares {
 
@@ -54,6 +53,10 @@ public class AlgoritmosLineares {
 
         }
         return mapContador;
+    }
+
+    public static Set<String> removerDuplicadasComSet(Collection<String> values) {
+        return new HashSet<>(values);
     }
 
 }
