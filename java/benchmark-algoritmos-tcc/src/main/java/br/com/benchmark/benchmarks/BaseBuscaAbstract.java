@@ -14,7 +14,6 @@ public abstract class BaseBuscaAbstract extends BaseBenchmark {
     protected int elementoMelhorCaso;
     protected int elementoCasoMedio;
     protected int elementoPiorCaso;
-    protected int elementoPiorCaso_NaoEncontrado;
 
     @Setup(Level.Trial)
     public void setup() {

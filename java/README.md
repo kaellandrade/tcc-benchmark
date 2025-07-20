@@ -32,4 +32,17 @@
 - [x] Soma de elementos de um array
 - [X] Verificação de palíndromo
 - [X] Contar frequência de elementos
-- [X] Remoção de duplicatas com set
+- [X] Remoção de duplicatas com set 
+
+
+## 4. O(n log n) Quase linear
+
+- [X] Merge Sort	
+- [X] Quick Sort (médio caso)
+- [ ] Heap Sort
+- [ ] Algoritmos eficientes de transformada rápida (FFT)
+- [ ] Algoritmos de construção de árvore de sufixo eficiente
+
+## Extras
+
+TODO...

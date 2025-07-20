@@ -7,22 +7,22 @@ import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.infra.Blackhole;
 
 
-public class QuicksortInternoJava extends BaseOrdenacaoAbstract implements CasosInterfaces {
+public class QuicksortJavaDualPivot extends BaseOrdenacaoAbstract implements CasosInterfaces {
     @Benchmark
     public void melhorCaso(Blackhole bh) {
         arrayParaOrdenar = arrayOrdenado.clone();
-        bh.consume(AlgoritmosNLogN.mergeSort(arrayParaOrdenar));
+        bh.consume(AlgoritmosNLogN.quicksortInternoDoJava(arrayParaOrdenar));
     }
 
     @Benchmark
     public void casoMedio(Blackhole bh) {
         arrayParaOrdenar = arrayAleatorio.clone();
-        bh.consume(AlgoritmosNLogN.mergeSort(arrayParaOrdenar));
+        bh.consume(AlgoritmosNLogN.quicksortInternoDoJava(arrayParaOrdenar));
     }
 
     @Benchmark
     public void piorCaso(Blackhole bh) {
         arrayParaOrdenar = arrayInvertido.clone();
-        bh.consume(AlgoritmosNLogN.mergeSort(arrayParaOrdenar));
+        bh.consume(AlgoritmosNLogN.quicksortInternoDoJava(arrayParaOrdenar));
     }
 }

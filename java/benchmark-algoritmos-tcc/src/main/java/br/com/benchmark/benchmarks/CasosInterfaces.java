@@ -6,12 +6,12 @@ import org.openjdk.jmh.infra.Blackhole;
 public interface CasosInterfaces {
 
     @Benchmark
-    public void melhorCaso(Blackhole bh);
+    void melhorCaso(Blackhole bh);
 
     @Benchmark
-    public void casoMedio(Blackhole bh);
+    void casoMedio(Blackhole bh);
 
     @Benchmark
-    public void piorCaso(Blackhole bh);
+    void piorCaso(Blackhole bh);
 
 }
