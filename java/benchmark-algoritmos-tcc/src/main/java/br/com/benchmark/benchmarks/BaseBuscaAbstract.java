@@ -8,12 +8,8 @@ public abstract class BaseBuscaAbstract extends BaseBenchmark {
 
     @Param({ "1000", "1000000", "10000000" })
     protected int lengthArray;
-
     protected int[] array;
-
-    protected int elementoMelhorCaso;
     protected int elementoCasoMedio;
-    protected int elementoPiorCaso;
 
     @Setup(Level.Trial)
     public void setup() {
@@ -23,9 +19,7 @@ public abstract class BaseBuscaAbstract extends BaseBenchmark {
             array[i] = i * 2; // Preenche com números pares para ter um valor "não encontrado" garantido
         }
 
-        elementoMelhorCaso = array[0];
         elementoCasoMedio = array[lengthArray / 2];
-        elementoPiorCaso = array[lengthArray - 1];
     }
 
 }

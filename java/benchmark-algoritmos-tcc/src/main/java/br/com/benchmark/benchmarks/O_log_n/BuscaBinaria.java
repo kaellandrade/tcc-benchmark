@@ -5,23 +5,10 @@ import org.openjdk.jmh.infra.Blackhole;
 
 import br.com.benchmark.algoritmos.AlgoritmosLogN;
 import br.com.benchmark.benchmarks.BaseBuscaAbstract;
-import br.com.benchmark.benchmarks.CasosInterfaces;
 
-public class BuscaBinaria extends BaseBuscaAbstract implements CasosInterfaces {
-
-    @Benchmark
-    public void melhorCaso(Blackhole bh) {
-        bh.consume(AlgoritmosLogN.buscaBinaria(array, elementoMelhorCaso));
-    }
-
+public class BuscaBinaria extends BaseBuscaAbstract {
     @Benchmark
     public void casoMedio(Blackhole bh) {
         bh.consume(AlgoritmosLogN.buscaBinaria(array, elementoCasoMedio));
     }
-
-    @Benchmark
-    public void piorCaso(Blackhole bh) {
-        bh.consume(AlgoritmosLogN.buscaBinaria(array, elementoPiorCaso));
-    }
-
 }
