@@ -8,7 +8,7 @@ import br.com.benchmark.benchmarks.BaseBuscaAbstract;
 
 public class BuscaBinaria extends BaseBuscaAbstract {
     @Benchmark
-    public void casoMedio(Blackhole bh) {
+    public void buscaBinaria(Blackhole bh) {
         bh.consume(AlgoritmosLogN.buscaBinaria(array, elementoCasoMedio));
     }
 }
