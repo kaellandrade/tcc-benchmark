@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
-import { loadPyodideInstance } from "../utils/pyodideLoader";
-import './PythonEditor.css';
 
+import { loadPyodideInstance } from "../utils/pyodideLoader";
+import "./PythonEditor.css";
+import { CodeEditor } from "./CodeEditor";
 
 const PythonEditor: React.FC = () => {
   const [pyodide, setPyodide] = useState<any>(null);
@@ -39,43 +40,20 @@ const PythonEditor: React.FC = () => {
 
       const finalOutput = stdout + (stderr ? `\n[Erro]\n${stderr}` : "");
       setOutput(finalOutput);
-    }
-    catch (error: any) {
+    } catch (error: any) {
       setOutput("Erro ao executar:\n" + error.toString());
     }
   };
 
   return (
-    <div className="w-full grow flex flex-col gap-2">
-      <h2>Editor Python com Pyodide (React + TS)</h2>
-      
-      {
-        isLoading
-        ?
-        <p>Carregando Editor...</p>
-        :
-        <>
-          <CodeMirror
-            value={code}
-            extensions={[python()]}
-            onChange={(value) => setCode(value)}
-            className="grow flex flex-col text-black contrast-125"
-          />
-
-          <div className="flex items-center gap-2">
-            <button>Salvar</button>
-            <button onClick={runCode}>Executar</button>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <p>Saída:</p>
-            <div className="min-h-[40px] bg-neutral-700 p-2 rounded-md">
-              {output}
-            </div>
-          </div>
-        </>
-      }
-    </div>
+    <CodeEditor
+      isLoading={isLoading}
+      languague={python()}
+      onChange={(value) => setCode(value)}
+      runCode={runCode}
+      value={code}
+      output={output}
+    />
   );
 };
 
