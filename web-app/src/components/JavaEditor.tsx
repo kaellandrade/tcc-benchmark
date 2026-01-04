@@ -69,7 +69,8 @@ const JavaEditor: React.FC = () => {
       // 2. Compila
       const compileExitCode = await cj.cheerpjRunMain(
         "com.sun.tools.javac.Main",
-        "/app/tools.jar:.",
+        //"/app/tools.jar:.",
+        "/app/jdk.compiler_17.jar:.",
         "-d",
         "/files/",
         "/str/Main.java"

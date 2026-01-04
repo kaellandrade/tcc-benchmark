@@ -1,4 +1,4 @@
-// src/utils/cheerpjLoader.ts
+// src/utils/cheerpjLoader.ts (Com compilador embutido para suportar Java 17)
 let initializationPromise: Promise<void> | null = null;
 
 export function loadCheerpJInstance(): Promise<void> {
@@ -21,7 +21,7 @@ export function loadCheerpJInstance(): Promise<void> {
 
     try {
       // Inicializa o CheerpJ
-      await (window as any).cheerpjInit();
+      await (window as any).cheerpjInit({ version: 17 });
       console.log("CheerpJ 4.2 Pronto");
     } catch (err) {
       initializationPromise = null;
