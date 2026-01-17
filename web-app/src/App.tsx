@@ -1,12 +1,47 @@
-// src/App.tsx
-import React from "react";
-import PythonEditor from "./components/PythonEditor";
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home } from "@/pages/Home";
+import { NotFound } from "@/pages/NotFound";
 
-const App: React.FC = () => {
+const App = () => {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
+  const handleThemeToggle = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  const handleSidebarOpen = () => {
+    setIsSidebarOpen(true);
+  };
+
+  const handleSidebarClose = () => {
+    setIsSidebarOpen(false);
+  };
+
+  const sharedProps = {
+    isSidebarOpen,
+    onSidebarOpen: handleSidebarOpen,
+    onSidebarClose: handleSidebarClose,
+    onThemeToggle: handleThemeToggle,
+    isDarkMode,
+  };
+
   return (
-    <div className="w-[100vw] min-h-[100vh] p-4 flex flex-col">
-      <PythonEditor />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home {...sharedProps} />} />
+        <Route path="*" element={<NotFound {...sharedProps} />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
