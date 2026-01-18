@@ -2,7 +2,7 @@
 **/target/
 **/out/
 *.class
-*.jar
+# *.jar
 *.war
 *.ear
 *.log
