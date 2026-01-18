@@ -3,6 +3,7 @@ import PythonEditor from "@/components/PythonEditor";
 import { Header } from "@/components/Header";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { Sidebar } from "@/components/Sidebar";
+import JavaEditor from "@/components/JavaEditor";
 
 interface HomeProps {
   isSidebarOpen: boolean;
@@ -40,6 +41,12 @@ export function Home({
 
       <main className="flex-1 flex flex-col overflow-hidden">
         {language === "python" && <PythonEditor />}
+
+        {language === "java" && <JavaEditor />}
+
+        {/*
+           {language === "c" && <CEditor />} 
+        */}
       </main>
     </div>
   );

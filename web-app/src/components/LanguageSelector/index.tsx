@@ -13,7 +13,7 @@ interface LanguageSelectorProps {
 
 const languages = [
   { value: "python", label: "Python", icon: "🐍" },
-  { value: "javascript", label: "JavaScript", icon: "📜" },
+  { value: "java", label: "Java", icon: "📜" },
   { value: "c", label: "C", icon: "⚙️" },
 ];
 
