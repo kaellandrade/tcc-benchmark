@@ -1,5 +1,5 @@
-import { ChevronUp } from "lucide-react";
-import { useState } from "react";
+import { ArrowBigDown } from "lucide-react";
+import {useEffect, useState} from "react";
 import { cn } from "@/lib/utils";
 
 interface OutputPanelProps {
@@ -7,16 +7,21 @@ interface OutputPanelProps {
 }
 
 export function OutputPanel({ output }: OutputPanelProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
+  useEffect(() => {
+      const expandir = Boolean(output)
+      if(expandir)
+          setIsExpanded(true)
+  },[output])
 
   return (
     <div className="flex flex-col bg-card border-t border-border">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center justify-between px-4 py-3 text-foreground hover:bg-muted transition-colors"
+        className="flex items-center justify-between px-4 py-3 text-foreground hover:bg-muted transition-colors cursor-pointer"
       >
         <span className="text-paragraph font-medium">Saída</span>
-        <ChevronUp
+        <ArrowBigDown
           className={cn(
             "size-5 transition-transform",
             !isExpanded && "rotate-180"
