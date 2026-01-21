@@ -1,50 +1,50 @@
 {
-  "name": "DIP - DCOMP IDE PWA",
-  "short_name": "DIP",
+  "name": "DcompLab",
+  "short_name": "DcompLab",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#F5EAEA",
   "theme_color": "#A459D1",
   "scope": ".",
-  "description": "Aplicativo para compilação de códigos em diferentes plataformas.",
+  "description": "Aplicativo para compilação de códigos offline em diferentes plataformas.",
   "icons": [
     {
-      "src": "dcomp-lab-icon-pwa-128x.png",
+      "src": "pwa-icons/dcomp-lab-icon-pwa-128x.png",
       "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "dcomp-lab-icon-pwa-128x.png",
+      "src": "pwa-icons/dcomp-lab-icon-pwa-128x.png",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "dcomp-lab-icon-pwa-128x.png",
+      "src": "pwa-icons/dcomp-lab-icon-pwa-128x.png",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "dcomp-lab-icon-pwa-256x.png",
+      "src": "pwa-icons/dcomp-lab-icon-pwa-256x.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "dcomp-lab-icon-pwa-256x.png",
+      "src": "pwa-icons/dcomp-lab-icon-pwa-256x.png",
       "sizes": "152x152",
       "type": "image/png"
     },
     {
-      "src": "dcomp-lab-icon-pwa-256x.png",
+      "src": "pwa-icons/dcomp-lab-icon-pwa-256x.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "dcomp-lab-icon-pwa-512x.png",
+      "src": "pwa-icons/dcomp-lab-icon-pwa-512x.png",
       "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "dcomp-lab-icon-pwa-512x.png",
+      "src": "pwa-icons/dcomp-lab-icon-pwa-512x.png",
       "sizes": "512x512",
       "type": "image/png"
     }
