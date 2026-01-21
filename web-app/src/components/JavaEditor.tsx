@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {java} from "@codemirror/lang-java";
 import {loadCheerpJInstance} from "../utils/cheerpjLoader";
 import {CodeEditor} from "./CodeEditor";
@@ -36,7 +36,7 @@ interface JavaEditorProps {
 }
 
 
-const JavaEditor: React.FC = ({isDarkMode}: JavaEditorProps) => {
+const JavaEditor = ({isDarkMode}: JavaEditorProps) => {
     const [isReady, setIsReady] = useState<boolean>(false);
     const [files, setFiles] = useState<FileTab[]>(initialFiles);
     const [activeFileId, setActiveFileId] = useState<string>("1");
