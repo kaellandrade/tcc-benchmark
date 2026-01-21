@@ -40,9 +40,9 @@ export function Home({
       <LanguageSelector value={language} onChange={setLanguage} />
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        {language === "python" && <PythonEditor />}
+        {language === "python" && <PythonEditor isDarkMode={isDarkMode} />}
 
-        {language === "java" && <JavaEditor />}
+        {language === "java" && <JavaEditor isDarkMode={isDarkMode} />}
 
         {/*
            {language === "c" && <CEditor />} 

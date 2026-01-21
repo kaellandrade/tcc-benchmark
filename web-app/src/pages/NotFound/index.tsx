@@ -3,7 +3,7 @@ import { Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
-import { UfoAbduction } from "@/components/illustrations/UfoAbduction";
+
 
 interface NotFoundProps {
   isSidebarOpen: boolean;
@@ -38,7 +38,15 @@ export function NotFound({
       />
 
       <main className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
-        <UfoAbduction />
+        <img
+            src={
+              isDarkMode
+                  ? `/src/assets/for-dark/404-page-for-dark.svg`
+                  : `/src/assets/for-light/404-page-for-light.svg`
+            }
+            alt="Logo DcompLab"
+            className="w-auto object-contain"
+        />
 
         <p className="text-paragraph text-center text-foreground">
           Erro <span className="text-tertiary font-bold">404</span>: A sintaxe falhou.
@@ -49,7 +57,7 @@ export function NotFound({
         <Button
           onClick={() => navigate("/")}
           variant="outline"
-          className="gap-2 px-8"
+          className="gap-2 px-8 cursor-pointer"
         >
           <Home className="size-4" />
           Home
