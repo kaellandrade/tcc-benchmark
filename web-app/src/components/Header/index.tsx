@@ -1,5 +1,7 @@
 import { Logs, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import dcompLabLogHeaderForDark from "@/assets/for-dark/dcomp-lab-log-header-for-dark.png";
+import dcompLabLogHeaderForLight from "@/assets/for-light/dcomp-lab-log-header-for-light.png";
 
 interface HeaderProps {
     onMenuClick?: () => void;
@@ -35,8 +37,8 @@ export function Header({
             <img
                 src={
                     isDarkMode
-                        ? `/src/assets/for-dark/dcomp-lab-log-header-for-dark.png`
-                        : `/src/assets/for-light/dcomp-lab-log-header-for-light.png`
+                        ? dcompLabLogHeaderForDark
+                        : dcompLabLogHeaderForLight
                 }
                 alt="Logo DcompLab"
                 className="h-8 w-auto object-contain"

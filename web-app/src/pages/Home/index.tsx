@@ -41,12 +41,7 @@ export function Home({
 
       <main className="flex-1 flex flex-col overflow-hidden">
         {language === "python" && <PythonEditor isDarkMode={isDarkMode} />}
-
         {language === "java" && <JavaEditor isDarkMode={isDarkMode} />}
-
-        {/*
-           {language === "c" && <CEditor />} 
-        */}
       </main>
     </div>
   );

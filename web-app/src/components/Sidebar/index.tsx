@@ -14,6 +14,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import dcompLabLogHeaderForDark from "@/assets/for-dark/dcomp-lab-log-header-for-dark.png";
+import dcompLabLogHeaderForLight from "@/assets/for-light/dcomp-lab-log-header-for-light.png";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -82,8 +84,8 @@ export function Sidebar({
               <img
                   src={
                     isDarkMode
-                        ? `/src/assets/for-dark/dcomp-lab-log-header-for-dark.png`
-                        : `/src/assets/for-light/dcomp-lab-log-header-for-light.png`
+                        ? dcompLabLogHeaderForDark
+                        : dcompLabLogHeaderForLight
                   }
                   alt="Logo DcompLab"
                   className="h-8 w-auto object-contain"
@@ -152,8 +154,8 @@ export function Sidebar({
                 <img
                     src={
                       isDarkMode
-                          ? `/src/assets/for-dark/dcomp-lab-log-header-for-dark.png`
-                          : `/src/assets/for-light/dcomp-lab-log-header-for-light.png`
+                          ? dcompLabLogHeaderForDark
+                          : dcompLabLogHeaderForLight
                     }
                     alt="Logo DcompLab"
                     className="h-3 w-auto object-contain"
