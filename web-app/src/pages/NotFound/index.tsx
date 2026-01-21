@@ -3,6 +3,8 @@ import { Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
+import dcompLab404ForDark from "@/assets/for-dark/404-page-for-dark.svg";
+import dcompLab404ForLight from "@/assets/for-light/404-page-for-light.svg";
 
 
 interface NotFoundProps {
@@ -41,8 +43,8 @@ export function NotFound({
         <img
             src={
               isDarkMode
-                  ? `/src/assets/for-dark/404-page-for-dark.svg`
-                  : `/src/assets/for-light/404-page-for-light.svg`
+                  ? dcompLab404ForDark
+                  : dcompLab404ForLight
             }
             alt="Logo DcompLab"
             className="w-auto object-contain"
