@@ -1,1 +1,2 @@
-import "./editor";
+export * from "./editor";
+export * from "./language";
