@@ -1,4 +1,4 @@
-import type { LanguageRuntime, ExecutionResult } from "@/models/language";
+import type { LanguageRuntime, ExecutionResult, ExecuteOptions } from "@/models/language";
 import { loadCheerpJInstance } from "@/utils/cheerpjLoader";
 
 export class JavaRuntime implements LanguageRuntime {
@@ -16,7 +16,9 @@ export class JavaRuntime implements LanguageRuntime {
     }
   }
 
-  async execute(code: string): Promise<ExecutionResult> {
+  async execute(code: string, options?: ExecuteOptions): Promise<ExecutionResult> {
+    const onOutput = options?.onOutput;
+
     if (!this.ready) {
       return {
         stdout: "",
@@ -27,6 +29,11 @@ export class JavaRuntime implements LanguageRuntime {
 
     const logs: string[] = [];
     const errors: string[] = [];
+
+    const appendLog = (text: string) => {
+      logs.push(text);
+      onOutput?.(text + "\n");
+    };
 
     // Intercept console to capture CheerpJ output
     const originalLog = console.log;
@@ -45,7 +52,7 @@ export class JavaRuntime implements LanguageRuntime {
         return;
       }
 
-      logs.push(text);
+      appendLog(text);
     };
 
     const captureError = (...args: unknown[]) => {
@@ -56,6 +63,7 @@ export class JavaRuntime implements LanguageRuntime {
         .join(" ");
 
       errors.push(text);
+      onOutput?.(text + "\n");
     };
 
     console.log = captureLog;
@@ -81,7 +89,7 @@ export class JavaRuntime implements LanguageRuntime {
       // Write the source file to CheerpJ's virtual filesystem
       cj.cheerpOSAddStringFile(`/str/${fileName}`, code);
 
-      logs.push("⏳ Compilando...");
+      appendLog("⏳ Compilando...");
 
       // Compile the Java source file
       const compileExitCode = await cj.cheerpjRunMain(
@@ -100,9 +108,9 @@ export class JavaRuntime implements LanguageRuntime {
         };
       }
 
-      logs.push("✅ Compilado com sucesso!");
-      logs.push("⏳ Executando...");
-      logs.push("------------------");
+      appendLog("✅ Compilado com sucesso!");
+      appendLog("⏳ Executando...");
+      appendLog("------------------");
 
       // Run the compiled class
       const runExitCode = await cj.cheerpjRunMain(className, "/files/");

@@ -39,7 +39,7 @@ export function Home({
       <LanguageSelector value={language} onChange={setLanguage} />
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        <LanguageEditor languageId={language} />
+        <LanguageEditor languageId={language} isDarkMode={isDarkMode} />
       </main>
     </div>
   );

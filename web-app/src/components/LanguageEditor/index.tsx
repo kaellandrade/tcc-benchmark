@@ -7,9 +7,10 @@ import { CodeEditor } from "@/components/CodeEditor";
 
 interface LanguageEditorProps {
   languageId: string;
+  isDarkMode?: boolean;
 }
 
-export function LanguageEditor({ languageId }: LanguageEditorProps) {
+export function LanguageEditor({ languageId, isDarkMode }: LanguageEditorProps) {
   const config = getLanguage(languageId);
   const [runtime, setRuntime] = useState<LanguageRuntime | null>(null);
   const [extension, setExtension] = useState<Extension | null>(null);
@@ -95,17 +96,43 @@ export function LanguageEditor({ languageId }: LanguageEditorProps) {
     const activeFile = files.find((f) => f.id === activeFileId);
     if (!activeFile) return;
 
-    const result = await runtime.execute(activeFile.content);
+    // Clear output before execution
+    setOutput("");
 
+    let hasStreamedOutput = false;
+
+    const result = await runtime.execute(activeFile.content, {
+      onOutput: (text) => {
+        hasStreamedOutput = true;
+        setOutput((prev) => prev + text);
+      },
+    });
+
+    // Build final output
     const outputParts: string[] = [];
-    if (result.stdout) {
+
+    // If no streaming happened, use stdout from result
+    if (!hasStreamedOutput && result.stdout) {
       outputParts.push(result.stdout);
     }
+
     if (result.stderr) {
       outputParts.push(`[Erro]\n${result.stderr}`);
     }
 
-    setOutput(outputParts.join("\n").trim() || "(sem saída)");
+    // For non-streaming runtimes, set the full output
+    // For streaming runtimes, only append stderr if present
+    if (!hasStreamedOutput) {
+      setOutput(outputParts.join("\n").trim() || "(sem saída)");
+    } else if (result.stderr) {
+      setOutput((prev) => {
+        const current = prev.trim();
+        return current ? `${current}\n[Erro]\n${result.stderr}` : `[Erro]\n${result.stderr}`;
+      });
+    } else {
+      // Ensure we have some output for streaming case
+      setOutput((prev) => prev.trim() || "(sem saída)");
+    }
   };
 
   if (!config) {
@@ -140,6 +167,7 @@ export function LanguageEditor({ languageId }: LanguageEditorProps) {
       onCodeChange={handleCodeChange}
       runCode={runCode}
       output={output}
+      isDarkMode={isDarkMode}
     />
   );
 }

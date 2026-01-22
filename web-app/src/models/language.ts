@@ -8,9 +8,15 @@ export interface ExecutionResult {
   exitCode: number;
 }
 
+export type OutputCallback = (text: string) => void;
+
+export interface ExecuteOptions {
+  onOutput?: OutputCallback;
+}
+
 export interface LanguageRuntime {
   initialize(): Promise<void>;
-  execute(code: string): Promise<ExecutionResult>;
+  execute(code: string, options?: ExecuteOptions): Promise<ExecutionResult>;
   isReady(): boolean;
 }
 

@@ -2,7 +2,7 @@ import type { LanguageConfig } from "@/models/language";
 import { registerLanguage } from "@/lib/languageRegistry";
 import { PythonRuntime } from "@/runtimes/python";
 import { CRuntime } from "@/runtimes/c";
-import { JavaRuntime, JavaScriptRuntime } from "@/runtimes/java";
+import { JavaRuntime } from "@/runtimes/java";
 import { Coffee, Cpu, FileCode2 } from "lucide-react";
 
 const pythonConfig: LanguageConfig = {
