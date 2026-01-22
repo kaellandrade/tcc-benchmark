@@ -75,18 +75,15 @@ export function CodeEditor({
             fileExtension={fileExtension}
         />
 
-        {/* Editor Header */}
         <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
         <span className="text-label font-medium text-foreground">
           Editor {languageName}
         </span>
           <div className="flex items-center gap-2">
-            {/* --- AJUSTE DO BOTÃO EXECUTAR --- */}
             <Button
                 onClick={runCode}
                 disabled={isLoading}
                 size="sm"
-                // Removemos variant="outline" para controle manual total via classes
                 className="gap-1 h-7 px-2.5 text-paragraph-small cursor-pointer transition-colors border
               bg-primary/0 border-primary/50 text-primary hover:bg-primary/20
               dark:bg-transparent dark:border-tertiary dark:text-tertiary
@@ -109,7 +106,7 @@ export function CodeEditor({
 
               <DropdownMenuContent
                   align="end"
-                  className="w-56 p-0 overflow-hidden border-secondary/50 bg-secondary/15 text-foreground dark:border-secondary/30 dark:bg-[#0b0b14]"
+                  className="w-56 p-0 overflow-hidden border-secondary/50 bg-background text-foreground shadow-md dark:border-secondary/30 dark:bg-[#0b0b14]"
               >
                 <div className="bg-secondary/20 px-3 py-2 border-b border-secondary/20">
                 <span className="text-sm font-semibold text-foreground dark:text-gray-200">
