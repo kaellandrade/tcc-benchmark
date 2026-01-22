@@ -18,7 +18,11 @@ export function OutputPanel({ output }: OutputPanelProps) {
     <div className="flex flex-col bg-card border-t border-border">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center justify-between px-4 py-3 text-foreground hover:bg-muted transition-colors cursor-pointer"
+        className={cn(
+          "flex items-center justify-between px-4 py-3 transition-colors cursor-pointer",
+          "bg-primary/10 text-primary",
+          "dark:bg-primary/10 dark:text-primary"
+        )}
       >
         <span className="text-paragraph font-medium">Saída</span>
         <ArrowBigDown
@@ -30,8 +34,8 @@ export function OutputPanel({ output }: OutputPanelProps) {
       </button>
 
       {isExpanded && (
-        <div className="px-4 pb-4">
-          <div className="bg-background rounded-md p-3 min-h-[60px] font-mono text-paragraph-small">
+        <div className="px-4 pb-4 bg-background ">
+          <div className="p-3 min-h-[60px] font-mono text-paragraph-small">
             {output ? (
               <pre className="whitespace-pre-wrap text-tertiary">
                 {">>> "}{output}
