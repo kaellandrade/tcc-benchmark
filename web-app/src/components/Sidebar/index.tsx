@@ -61,7 +61,7 @@ export function Sidebar({
             className="w-[400px] p-0 flex gap-0 flex-col bg-background border-r border-border"
         >
           <SheetHeader
-              className={`relative z-20 flex-row items-center justify-between px-4 py-3 transition-colors duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.25)] ${
+              className={`relative z-20 flex-row items-center justify-between px-4 py-1 transition-colors duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.25)] ${
                   isDarkMode
                       ? "bg-secondary/80 border-b border-secondary/20"
                       : "bg-secondary/10"
@@ -88,7 +88,7 @@ export function Sidebar({
                         : dcompLabLogHeaderForLight
                   }
                   alt="Logo DcompLab"
-                  className="h-8 w-auto object-contain"
+                  className="h-5 w-auto object-contain"
               />
             </SheetTitle>
 
