@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "@/pages/Home";
 import { NotFound } from "@/pages/NotFound";
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import { Toaster } from "@/components/ui/toaster";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -39,7 +38,6 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Toaster />
       <Routes>
         <Route path="/" element={<Home {...sharedProps} />} />
         <Route path="*" element={<NotFound {...sharedProps} />} />
