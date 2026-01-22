@@ -2,12 +2,7 @@ import { ArrowBigDown, Clipboard } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Toast,
-  ToastProvider,
-  ToastViewport,
-  ToastTitle,
-} from "@/components/ui/toast";
+import * as Toast from "@radix-ui/react-toast";
 
 interface OutputPanelProps {
   output: string;
@@ -37,7 +32,7 @@ export function OutputPanel({ output }: OutputPanelProps) {
   }
 
   return (
-    <ToastProvider swipeDirection="right">
+    <Toast.Provider swipeDirection="right">
       <div className="flex flex-col bg-card border-t border-border">
         <div
           className={cn(
@@ -49,13 +44,13 @@ export function OutputPanel({ output }: OutputPanelProps) {
           <span className="text-paragraph font-medium">Saída</span>
           <div className="flex items-center">
             {output && (
-              <Button onClick={handleCopy} variant="ghost" size="icon-sm">
+              <Button onClick={handleCopy} variant="link" size="icon-sm">
                 <Clipboard className="size-4" />
               </Button>
             )}
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
-              variant="ghost"
+              variant="link"
               size="icon-sm"
             >
               <ArrowBigDown
@@ -85,10 +80,16 @@ export function OutputPanel({ output }: OutputPanelProps) {
           </div>
         )}
       </div>
-      <Toast open={toastOpen} onOpenChange={setToastOpen}>
-        <ToastTitle>Saída copiada para a área de transferência!</ToastTitle>
-      </Toast>
-      <ToastViewport />
-    </ToastProvider>
+      <Toast.Root
+        className="grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-md border bg-background p-[15px] shadow-lg [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
+        open={toastOpen}
+        onOpenChange={setToastOpen}
+      >
+        <Toast.Title className="mb-[5px] text-[15px] font-medium text-foreground [grid-area:_title]">
+          Saída copiada para a área de transferência!
+        </Toast.Title>
+      </Toast.Root>
+      <Toast.Viewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />
+    </Toast.Provider>
   );
 }
