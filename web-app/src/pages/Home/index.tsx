@@ -1,9 +1,8 @@
 import { useState } from "react";
-import PythonEditor from "@/components/PythonEditor";
+import { LanguageEditor } from "@/components/LanguageEditor";
 import { Header } from "@/components/Header";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { Sidebar } from "@/components/Sidebar";
-import JavaEditor from "@/components/JavaEditor";
 
 interface HomeProps {
   isSidebarOpen: boolean;
@@ -40,8 +39,7 @@ export function Home({
       <LanguageSelector value={language} onChange={setLanguage} />
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        {language === "python" && <PythonEditor isDarkMode={isDarkMode} />}
-        {language === "java" && <JavaEditor isDarkMode={isDarkMode} />}
+        <LanguageEditor languageId={language} isDarkMode={isDarkMode} />
       </main>
     </div>
   );
