@@ -15,7 +15,7 @@ export default defineConfig({
             srcDir: 'src',
             filename: 'sw.js',
             registerType: 'autoUpdate',
-            includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+            includeAssets: ['favicon.ico', 'apple-touch-icon.png','jdk.compiler_17.jar'],
             manifest: {
                 "name": "DcompLab",
                 "short_name": "DcompLab",
@@ -69,7 +69,8 @@ export default defineConfig({
                 ]
             },
             injectManifest: {
-                maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
+                maximumFileSizeToCacheInBytes: 30 * 1024 * 1024,
+                globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,jar,json,wasm}'],
             }
         }),
         nodePolyfills({
