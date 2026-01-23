@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import {
   Play,
@@ -19,7 +19,8 @@ import {
 import { FileTabs } from "@/components/FileTabs";
 import { OutputPanel } from "@/components/OutputPanel";
 import { NewFileDialog } from "@/components/NewFileDialog";
-
+import { EditorView } from "@codemirror/view";
+import { QuickActionsToolbar } from "@/components/QuickActionsToolbar";
 interface FileTab {
   id: string;
   name: string;
@@ -60,6 +61,13 @@ export function CodeEditor({
   const [isNewFileDialogOpen, setIsNewFileDialogOpen] = useState(false);
   const activeFile = files.find((f) => f.id === activeFileId);
 
+  const [editorView, setEditorView] = useState<EditorView | null>(null);
+// Efeito para focar no editor quando mudar de arquivo (opcional, melhora UX)
+  useEffect(() => {
+    if (editorView) {
+      editorView.focus();
+    }
+  }, [activeFileId, editorView]);
   return (
       <div
           className={`flex flex-col flex-1 overflow-hidden transition-all duration-300 ${
@@ -75,8 +83,8 @@ export function CodeEditor({
             fileExtension={fileExtension}
         />
 
-        <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
-        <span className="text-label font-medium text-foreground">
+          <div className="flex-none flex items-center justify-between px-4 py-2 landscape:py-1 border-b border-border/50">
+         <span className="text-label font-medium text-foreground landscape:hidden">
           Editor {languageName}
         </span>
           <div className="flex items-center gap-2">
@@ -155,7 +163,7 @@ export function CodeEditor({
             onTabClose={onFileClose}
         />
 
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden relative min-h-0">
           {isLoading ? (
               <div className="flex items-center justify-center h-full bg-transparent">
                 <p className="text-muted-foreground">Carregando Editor...</p>
@@ -166,18 +174,64 @@ export function CodeEditor({
                   extensions={[language]}
                   onChange={onCodeChange}
                   theme={`${isDarkMode ? "dark" : "light"}`}
-                  className="h-full overflow-auto [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto"
+                  className="h-full w-full [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto text-base"
+                  onCreateEditor={(view) => setEditorView(view)}
                   basicSetup={{
                     lineNumbers: true,
                     highlightActiveLineGutter: true,
                     highlightActiveLine: true,
                     foldGutter: false,
+                    autocompletion:true
                   }}
               />
           )}
         </div>
+        {!isLoading && (
+            <div className="flex-none z-20 border-t border-border/50 bg-background hidden [@media(pointer:coarse)]:block">
+              <QuickActionsToolbar view={editorView} />
+            </div>
+        )}
 
-        <OutputPanel output={output} />
+        {/* 2. BARRA DESKTOP (Mouse) - Só aparece se for pointer: fine */}
+        {!isLoading && (
+            <div className="flex-none z-20 h-8 border-t border-border/50 bg-secondary/10 hidden [@media(pointer:fine)]:flex items-center justify-end px-4 gap-6 select-none">
+
+              {/* Dica Executar */}
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span>Executar:</span>
+                <div className="flex items-center gap-1 font-mono text-[10px]">
+                  <kbd className="bg-background border border-border rounded px-1.5 py-0.5 shadow-sm">Ctrl</kbd>
+                  <span>+</span>
+                  <kbd className="bg-background border border-border rounded px-1.5 py-0.5 shadow-sm">Enter</kbd>
+                </div>
+              </div>
+
+              {/* Dica Salvar */}
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span>Salvar:</span>
+                <div className="flex items-center gap-1 font-mono text-[10px]">
+                  <kbd className="bg-background border border-border rounded px-1.5 py-0.5 shadow-sm">Ctrl</kbd>
+                  <span>+</span>
+                  <kbd className="bg-background border border-border rounded px-1.5 py-0.5 shadow-sm">S</kbd>
+                </div>
+              </div>
+
+              {/* Dica Comentar (Opcional) */}
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span>Comentar:</span>
+                <div className="flex items-center gap-1 font-mono text-[10px]">
+                  <kbd className="bg-background border border-border rounded px-1.5 py-0.5 shadow-sm">Ctrl</kbd>
+                  <span>+</span>
+                  <kbd className="bg-background border border-border rounded px-1.5 py-0.5 shadow-sm">/</kbd>
+                </div>
+              </div>
+
+            </div>
+        )}
+
+        <div className="flex-none z-30">
+          <OutputPanel output={output} />
+        </div>
       </div>
   );
 }

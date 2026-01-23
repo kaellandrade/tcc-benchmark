@@ -36,7 +36,7 @@ export function OutputPanel({ output }: OutputPanelProps) {
       <div className="flex flex-col bg-card border-t border-border">
         <div
           className={cn(
-            "flex items-center justify-between px-4 py-2 transition-colors",
+              "flex items-center justify-between px-4 py-2 landscape:py-1 transition-colors",
             "bg-primary/10 text-primary",
             "dark:bg-primary/10 dark:text-primary"
           )}
@@ -44,13 +44,14 @@ export function OutputPanel({ output }: OutputPanelProps) {
           <span className="text-paragraph font-medium">Saída</span>
           <div className="flex items-center">
             {output && (
-              <Button onClick={handleCopy} variant="link" size="icon-sm">
+              <Button onClick={handleCopy} className="cursor-pointer" variant="link" size="icon-sm">
                 <Clipboard className="size-4" />
               </Button>
             )}
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
               variant="link"
+              className="cursor-pointer"
               size="icon-sm"
             >
               <ArrowBigDown
