@@ -31,8 +31,7 @@ export function Home({
                 isDarkMode={isDarkMode}
             />
 
-            {/* ALTERAÇÃO: Agrupamos Header e Selector e escondemos no landscape */}
-            <div className="flex-none landscape:hidden">
+            <div className="flex-none [@media(pointer:coarse)_and_(orientation:landscape)]:hidden">
                 <Header
                     onMenuClick={onSidebarOpen}
                     onThemeToggle={onThemeToggle}
