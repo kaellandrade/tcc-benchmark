@@ -40,7 +40,7 @@ export function LanguageSelector({ value, onChange }: LanguageSelectorProps) {
             <SelectItem
               key={lang.name}
               value={lang.id}
-              className="cursor-pointer focus:bg-secondary/20 dark:focus:bg-secondary/40"
+              className="cursor-pointer focus:bg-secondary/20 dark:focus:bg-secondary/40 dark:focus:text-white"
             >
               <span className="flex items-center gap-2">
                 <lang.icon className="size-4 text-muted-foreground" />

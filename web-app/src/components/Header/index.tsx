@@ -16,7 +16,7 @@ export function Header({
 }: HeaderProps) {
     return (
         <header
-            className={`relative z-10 flex items-center justify-between px-4 py-3 transition-colors duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.25)] ${
+            className={`relative z-10 flex items-center justify-between px-4 py-1 transition-colors duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.25)] ${
                 isDarkMode
                     ? "bg-secondary/80 backdrop-blur-md border-b border-secondary/20"
                     : "bg-secondary/10"
@@ -41,7 +41,7 @@ export function Header({
                         : dcompLabLogHeaderForLight
                 }
                 alt="Logo DcompLab"
-                className="h-8 w-auto object-contain"
+                className="h-5 w-auto object-contain"
             />
             <Button
                 variant="ghost"
