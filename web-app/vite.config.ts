@@ -15,7 +15,7 @@ export default defineConfig({
             srcDir: 'src',
             filename: 'sw.js',
             registerType: 'autoUpdate',
-            includeAssets: ['favicon.ico', 'apple-touch-icon.png','jdk.compiler_17.jar'],
+            includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
             manifest: {
                 "name": "DcompLab",
                 "short_name": "DcompLab",
