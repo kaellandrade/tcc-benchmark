@@ -70,7 +70,7 @@ export default defineConfig({
             },
             injectManifest: {
                 maximumFileSizeToCacheInBytes: 30 * 1024 * 1024,
-                globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,jar,json,wasm}'],
+                globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,jar,json,wasm,bin}'],
             }
         }),
         nodePolyfills({
