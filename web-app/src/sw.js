@@ -20,13 +20,12 @@ registerRoute(
         cacheName: 'cheerpj-jars-cache',
         plugins: [
             new CacheableResponsePlugin({
-                statuses: [0, 200], // Aceita respostas opacas (0) e OK (200)
+                statuses: [200], // REMOVIDO O '0'. Aceitamos APENAS respostas completas e legíveis.
             }),
             new ExpirationPlugin({
-                maxEntries: 20, // Limite conservador para arquivos grandes
-                maxAgeSeconds: 365 * 24 * 60 * 60, // 1 ano
+                maxEntries: 20,
+                maxAgeSeconds: 365 * 24 * 60 * 60,
             }),
-            // AQUI ESTÁ A CORREÇÃO DO ERRO "HTTP server does not support the Range header":
             new RangeRequestsPlugin(),
         ],
     })
