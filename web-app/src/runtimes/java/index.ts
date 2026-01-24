@@ -1,110 +1,123 @@
-import type { LanguageRuntime, ExecutionResult } from "@/models/language";
-import { warmupCheerpJ} from "@/utils/cheerpjLoader";
-
-// Declaração de tipos para as globais do CheerpJ
-declare global {
-  function cheerpjRunMain(mainClass: string, classPath: string, ...args: string[]): Promise<number>;
-  function cheerpOSAddStringFile(path: string, content: string): void;
-}
+import type { LanguageRuntime, ExecutionResult, ExecuteOptions } from "@/models/language";
+import { initializeCheerpJ } from "@/utils/cheerpjLoader";
 
 export class JavaRuntime implements LanguageRuntime {
-  private compilerPath = "/app/jdk.compiler_17.jar"; // Caminho onde você colocou o jar na pasta 'public'
+  private ready: boolean = false;
+  private compilerLoaded: boolean = false;
 
   async initialize(): Promise<void> {
-    // Reutiliza seu loader existente
-    await warmupCheerpJ();
+    if (this.ready) return;
+    await initializeCheerpJ();
+    this.ready = true;
   }
 
-  async execute(code: string): Promise<ExecutionResult> {
-    // Garante que o CheerpJ está carregado
-    await this.initialize();
-
-    let output = "";
-    let errorOutput = "";
-
-    // === 1. Interceptação do Console ===
-    // O CheerpJ envia System.out para console.log e System.err para console.error.
-    // Precisamos capturar isso para exibir na sua IDE.
-    const originalLog = console.log;
-    const originalError = console.error;
-
-    const restoreConsole = () => {
-      console.log = originalLog;
-      console.error = originalError;
-    };
-
+  private async loadCompilerToMemory(cj: any, appendLog: (s: string) => void) {
+    if (this.compilerLoaded) return;
     try {
-      console.log = (...args: any[]) => {
-        output += args.join(" ") + "\n";
-        // Descomente abaixo se quiser ver no devtools também
-        // originalLog(...args);
-      };
-
-      console.error = (...args: any[]) => {
-        errorOutput += args.join(" ") + "\n";
-        // originalError(...args);
-      };
-
-      // === 2. Preparação do Arquivo Fonte ===
-      // Salvamos o código do usuário em /str/ (memória rápida)
-      const sourcePath = "/str/Main.java";
-      cheerpOSAddStringFile(sourcePath, code);
-
-      // === 3. Compilação ===
-      // Executa o compilador Java (javac)
-      // -d /files/ : Salva o .class compilado no sistema de arquivos persistente (IndexedDB)
-      //              Isso é necessário porque /str/ é somente leitura para escrita de arquivos binários
-      const compileExitCode = await cheerpjRunMain(
-          "com.sun.tools.javac.Main", // Entry point do compilador
-          this.compilerPath,          // Classpath do compilador
-          "-d", "/files/",            // Argumento: Onde salvar o .class
-          sourcePath                  // Argumento: Arquivo fonte
-      );
-
-      // Se houver erro de compilação, retornamos imediatamente
-      if (compileExitCode !== 0) {
-        restoreConsole(); // Restaura antes de retornar
-        return {
-          stdout: output,
-          stderr: errorOutput || "Erro de compilação desconhecido.",
-          exitCode: compileExitCode
-        };
-      }
-
-      // Limpa os logs da compilação para não misturar com a execução do programa
-      output = "";
-      errorOutput = "";
-
-      // === 4. Execução ===
-      // Executa a classe compilada (Main)
-      // Classpath agora aponta para /files/ onde o Main.class foi gerado
-      const runExitCode = await cheerpjRunMain(
-          "Main",     // Nome da classe
-          "/files/",  // Classpath (onde está o .class)
-          ""          // Argumentos (args[])
-      );
-
-      restoreConsole();
-
-      return {
-        stdout: output,
-        stderr: errorOutput,
-        exitCode: runExitCode
-      };
-
-    } catch (error: any) {
-      restoreConsole();
-      return {
-        stdout: output,
-        stderr: `Erro interno da Runtime: ${error.message || error.toString()}`,
-        exitCode: 1
-      };
+      appendLog("📥 Baixando JAR para RAM...");
+      const response = await fetch('/jdk.compiler_17.jar');
+      if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
+      const buffer = await response.arrayBuffer();
+      const bytes = new Uint8Array(buffer);
+      cj.cheerpOSAddStringFile("/str/compiler.jar", bytes);
+      this.compilerLoaded = true;
+    } catch (e) {
+      appendLog(`❌ Erro Load: ${e}`);
+      throw e;
     }
   }
 
-  isReady(): boolean {
-    // Podemos considerar pronto se a promise do loader já resolveu,
-    // mas como chamamos initialize() no execute, isso é seguro.
-    return true;
+  // --- NOVA FUNÇÃO: Detecção de Pacotes (Igual ao Svelte) ---
+  private deriveMainClass(code: string, simpleName: string): string {
+    const match = code.match(/package\s+([a-zA-Z0-9_.]+);/);
+    if (match && match[1]) {
+      // Se tem package, o nome da classe para rodar é "pacote.NomeDaClasse"
+      return `${match[1]}.${simpleName}`;
+    }
+    return simpleName;
   }
+
+  async execute(code: string, options?: ExecuteOptions): Promise<ExecutionResult> {
+    const onOutput = options?.onOutput;
+    if (!this.ready) await this.initialize();
+
+    const logs: string[] = [];
+    const appendLog = (text: string) => {
+      logs.push(text);
+      onOutput?.(text + "\n");
+    };
+
+    // --- MUDANÇA 1: SEM FILTROS (Debug Mode) ---
+    // Vamos capturar TUDO para ver se o "Hello World" está saindo ou se tem erro escondido
+    const originalConsole = { log: console.log, info: console.info, warn: console.warn, error: console.error };
+
+    const intercept = (...args: any[]) => {
+      const text = args.map(a => String(a)).join(" ");
+      // COMENTEI O FILTRO PARA VERMOS TUDO AGORA
+      // if (!ignoreList.some(term => text.includes(term)))
+      appendLog(text);
+    };
+
+    console.log = intercept;
+    console.info = intercept;
+    console.warn = intercept;
+    console.error = intercept;
+
+    try {
+      const cj = window as any;
+      await this.loadCompilerToMemory(cj, appendLog);
+
+      const classNameMatch = code.match(/public\s+class\s+(\w+)/);
+      if (!classNameMatch) return { stdout: "", stderr: "Erro: Classe pública não encontrada", exitCode: 1 };
+
+      const simpleClassName = classNameMatch[1];
+      const fileName = `${simpleClassName}.java`;
+
+      // Escreve código fonte
+      cj.cheerpOSAddStringFile(`/str/${fileName}`, code);
+
+      appendLog("⏳ Compilando...");
+
+      const compileExitCode = await cj.cheerpjRunMain(
+          "com.sun.tools.javac.Main",
+          "/str/compiler.jar:.",
+          "-d",
+          "/files/",
+          `/str/${fileName}`
+      );
+
+      if (compileExitCode !== 0) {
+        return { stdout: logs.join("\n"), stderr: "❌ Erro de Compilação", exitCode: compileExitCode };
+      }
+
+      appendLog("✅ Executando...");
+      appendLog("------------------");
+
+      // --- MUDANÇA 2: Usar o nome completo com pacote ---
+      const fullClassName = this.deriveMainClass(code, simpleClassName);
+
+      if (fullClassName !== simpleClassName) {
+        appendLog(`ℹ️ Rodando classe com pacote: ${fullClassName}`);
+      }
+
+      // Executa
+      const runExitCode = await cj.cheerpjRunMain(fullClassName, "/files/");
+
+      return {
+        stdout: logs.join("\n"),
+        stderr: "",
+        exitCode: runExitCode,
+      };
+
+    } catch (error: any) {
+      return { stdout: logs.join("\n"), stderr: `Erro Crítico: ${error.toString()}`, exitCode: 1 };
+    } finally {
+      // Restaura console
+      console.log = originalConsole.log;
+      console.info = originalConsole.info;
+      console.warn = originalConsole.warn;
+      console.error = originalConsole.error;
+    }
+  }
+  isReady(): boolean { return this.ready; }
 }
