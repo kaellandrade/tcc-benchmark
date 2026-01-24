@@ -2,74 +2,37 @@ import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { CacheFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { CacheableResponsePlugin } from 'workbox-cacheable-response';
-import { RangeRequestsPlugin } from 'workbox-range-requests'; // Essencial para o CheerpJ
 
-// Limpa caches de versões antigas do SW
 cleanupOutdatedCaches();
-
-// Faz o precache dos assets gerados pelo build do Vite (index.html, js, css)
-// Nota: O seu jdk.compiler_17.jar NÃO deve ser processado aqui se você o removeu do includeAssets
 precacheAndRoute(self.__WB_MANIFEST);
 
-// 1. Rota ESPECÍFICA para arquivos JAR (O Compilador)
-// Usa RangeRequestsPlugin para permitir que o CheerpJ leia "pedaços" do arquivo do cache
+const JAVA_CACHE_NAME = 'java-jars-cache';
+
+// Rota Simples: Entrega o arquivo (200 OK)
 registerRoute(
     ({ url }) => url.pathname.endsWith('.jar'),
     new CacheFirst({
-        cacheName: 'cheerpj-jars-cache',
+        cacheName: JAVA_CACHE_NAME,
         plugins: [
-            new CacheableResponsePlugin({
-                statuses: [200], // REMOVIDO O '0'. Aceitamos APENAS respostas completas e legíveis.
-            }),
-            new ExpirationPlugin({
-                maxEntries: 20,
-                maxAgeSeconds: 365 * 24 * 60 * 60,
-            }),
-            new RangeRequestsPlugin(),
+            new ExpirationPlugin({ maxEntries: 5, maxAgeSeconds: 30 * 24 * 60 * 60 }),
         ],
     })
 );
 
-// 2. Rota para a Runtime do CheerpJ (Recursos da Leaning Technologies)
-// O CheerpJ baixa centenas de pequenos arquivos. Precisamos de um limite alto.
+// Rota para dependências externas
 registerRoute(
-    ({ url }) => url.href.includes('leaningtech.com'),
+    ({ url }) => url.href.includes('leaningtech.com') || url.href.includes('jsdelivr.net'),
     new CacheFirst({
-        cacheName: 'cheerpj-runtime-cache',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [0, 200],
-            }),
-            new ExpirationPlugin({
-                maxEntries: 2000, // Aumentado para suportar toda a runtime Java
-                maxAgeSeconds: 365 * 24 * 60 * 60, // 1 ano
-            }),
-            new RangeRequestsPlugin(), // Boa prática para módulos WASM grandes da runtime
-        ],
+        cacheName: 'external-libs',
+        plugins: [ new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 365 * 24 * 60 * 60 }) ]
     })
 );
 
-// 3. Rota para Bibliotecas Externas (Pyodide, etc via CDN)
-registerRoute(
-    ({ url }) => url.href.includes('jsdelivr.net') || url.href.includes('pyodide'),
-    new CacheFirst({
-        cacheName: 'external-libs-cache',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [0, 200],
-            }),
-            new ExpirationPlugin({
-                maxEntries: 100,
-                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 dias
-            }),
-        ],
-    })
-);
-
-// Permite que a aplicação peça ao SW para atualizar imediatamente (skipWaiting)
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-        self.skipWaiting();
-    }
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
+    event.waitUntil(
+        caches.open(JAVA_CACHE_NAME).then((cache) => {
+            return cache.add('/jdk.compiler_17.jar').catch(console.error);
+        })
+    );
 });
