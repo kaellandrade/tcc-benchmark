@@ -83,7 +83,7 @@ export function QuickActionsToolbar({view}: QuickActionsToolbarProps) {
 
             <div
                 className={cn(
-                    "w-full z-40 bg-secondary/95 backdrop-blur supports-[backdrop-filter]:bg-secondary/10 border-t border-border/50 transition-all duration-300 ease-in-out",
+                    "fixed left-0 right-0 z-40 bg-secondary/95 backdrop-blur border-t border-border/50 transition-all duration-300 ease-in-out",
 
                     isOpen
                         ? "translate-y-0 opacity-100 relative"
