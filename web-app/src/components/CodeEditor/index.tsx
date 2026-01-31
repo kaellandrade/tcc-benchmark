@@ -21,6 +21,7 @@ import {OutputPanel} from "@/components/OutputPanel";
 import {NewFileDialog} from "@/components/NewFileDialog";
 import {EditorView} from "@codemirror/view";
 import {QuickActionsToolbar} from "@/components/QuickActionsToolbar";
+import {dcompLabEditorTema} from "@/config/editorTheme.ts";
 
 interface FileTab {
     id: string;
@@ -181,7 +182,7 @@ export function CodeEditor({
                             value={activeFile?.content || ""}
                             onCreateEditor={(view) => setEditorView(view)}
                             className="flex-1 w-full overflow-hidden [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto text-base"
-                            extensions={[language]}
+                            extensions={[language, dcompLabEditorTema]}
                             onChange={onCodeChange}
                             onFocus={() => onFocusChange?.(true)}
                             onBlur={() => {

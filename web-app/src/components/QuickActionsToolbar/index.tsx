@@ -47,7 +47,6 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
 
     if (!view) return null;
 
-    // --- Helpers (Mantidos iguais) ---
     const insertText = (text: string, cursorOffset = 0) => {
         const state = view.state;
         const ranges = state.selection.ranges;
@@ -102,15 +101,13 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
     };
 
     // --- Componente de Botão com Cores de Grupo ---
-    // groupColor define o "tema" do botão.
-    // As cores são sutis no fundo (bg-opacity-10/20) e fortes no ícone.
     type GroupColor = "neutral" | "power" | "nav" | "structure" | "logic" | "danger";
 
     const ActionBtn = ({
                            icon: Icon,
                            label,
                            onClick,
-                           group = "neutral", // Padrão
+                           group = "neutral",
                            className = ""
                        }: {
         icon?: any,
@@ -120,23 +117,12 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
         className?: string
     }) => {
 
-        // Mapeamento de estilos por grupo
         const groupStyles = {
             neutral: "text-slate-600 bg-slate-100 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50",
-
-            // Laranja suave para "Poderes"
             power: "text-amber-600 bg-amber-50 hover:bg-amber-100 dark:text-amber-400 dark:bg-amber-900/20 dark:hover:bg-amber-900/40",
-
-            // Azul para navegação
             nav: "text-blue-600 bg-blue-50 hover:bg-blue-100 dark:text-blue-400 dark:bg-blue-900/20 dark:hover:bg-blue-900/40",
-
-            // Roxo (Primary) para estrutura
             structure: "text-indigo-600 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-300 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40",
-
-            // Verde/Teal para lógica e matemática
             logic: "text-teal-700 bg-teal-50 hover:bg-teal-100 dark:text-teal-300 dark:bg-teal-900/20 dark:hover:bg-teal-900/40",
-
-            // Vermelho para destrutivo
             danger: "text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-900/20 dark:hover:bg-red-900/40"
         };
 
@@ -163,7 +149,7 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
         <>
             {/* Botão Flutuante */}
             <div className={cn(
-                "absolute bottom-2 right-4 z-50 transition-all duration-300 ease-in-out",
+                "fixed bottom-2 right-4 z-50 transition-all duration-300 ease-in-out",
                 !isOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-0 pointer-events-none"
             )}>
                 <Button onClick={() => setIsOpen(true)} onMouseDown={preventFocusSteal} size="icon-sm" className="h-10 w-10 rounded-full shadow-xl bg-primary text-primary-foreground hover:bg-primary/90">
@@ -198,7 +184,7 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
                     <ActionBtn icon={Wand2} onClick={handleAutoIndent} group="power" />
                     <ActionBtn icon={TextSelect} onClick={() => selectLine(view)} group="power" />
                     <ActionBtn icon={MessageSquareCode} onClick={() => toggleComment(view)} group="power" />
-                    <ActionBtn icon={Trash2} onClick={() => deleteLine(view)} group="danger" /> {/* Delete é vermelho */}
+                    <ActionBtn icon={Trash2} onClick={() => deleteLine(view)} group="danger" />
 
                     <Separator />
 
@@ -219,17 +205,32 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
                     <Separator />
 
                     {/* ZONA 5: LÓGICA E MATEMÁTICA (Verde/Teal) */}
+
+                    {/* Subgrupo: Sintaxe */}
                     <ActionBtn label=":" onClick={() => insertText(":")} group="logic" className="font-extrabold" />
                     <ActionBtn label=";" onClick={() => insertText(";")} group="logic" className="font-extrabold" />
                     <ActionBtn icon={Hash} onClick={() => insertText("# ")} group="logic" />
-                    <ActionBtn label="=" onClick={() => insertText(" = ")} group="logic" className="font-extrabold" />
 
+                    <Separator />
+
+                    {/* Subgrupo: Comparação (Relacionais) */}
+                    <ActionBtn label="<" onClick={() => insertText(" < ")} group="logic" className="font-extrabold" />
+                    <ActionBtn label=">" onClick={() => insertText(" > ")} group="logic" className="font-extrabold" />
+                    <ActionBtn label="==" onClick={() => insertText(" == ")} group="logic" className="font-extrabold" />
+                    <ActionBtn label="<=" onClick={() => insertText(" <= ")} group="logic" className="font-extrabold" />
+                    <ActionBtn label=">=" onClick={() => insertText(" >= ")} group="logic" className="font-extrabold" />
+
+                    <Separator />
+
+                    {/* Subgrupo: Lógica Booleana e Atribuição */}
+                    <ActionBtn label="=" onClick={() => insertText(" = ")} group="logic" className="font-extrabold" />
                     <ActionBtn label="!" onClick={() => insertText("!")} group="logic" className="font-extrabold" />
                     <ActionBtn label="&" onClick={() => insertText(" & ")} group="logic" className="font-extrabold" />
                     <ActionBtn label="|" onClick={() => insertText(" | ")} group="logic" className="font-extrabold" />
 
                     <Separator />
 
+                    {/* Subgrupo: Matemática */}
                     <ActionBtn icon={Plus} onClick={() => insertText(" + ")} group="logic" />
                     <ActionBtn icon={Minus} onClick={() => insertText(" - ")} group="logic" />
                     <ActionBtn icon={MultiplyIcon} onClick={() => insertText(" * ")} group="logic" />
