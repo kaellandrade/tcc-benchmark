@@ -85,7 +85,7 @@ export function CodeEditor({
 
             <div
                 className="flex-none flex items-center justify-between px-4 py-2 landscape:py-1 border-b border-border/50">
-         <span className="text-label font-medium text-foreground landscape:hidden">
+         <span className="text-label font-medium text-foreground">
           Editor {languageName}
         </span>
                 <div className="flex items-center gap-2">
