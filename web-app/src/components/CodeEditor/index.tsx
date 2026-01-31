@@ -42,6 +42,7 @@ interface CodeEditorProps {
     runCode: () => Promise<void>;
     output: string;
     isDarkMode?: undefined | boolean;
+    onFocusChange?: (focused: boolean) => void;
 }
 
 export function CodeEditor({
@@ -58,6 +59,7 @@ export function CodeEditor({
                                runCode,
                                output,
                                isDarkMode,
+                               onFocusChange
                            }: CodeEditorProps) {
     const [isNewFileDialogOpen, setIsNewFileDialogOpen] = useState(false);
     const activeFile = files.find((f) => f.id === activeFileId);
@@ -181,6 +183,10 @@ export function CodeEditor({
                             className="flex-1 w-full overflow-hidden [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto text-base"
                             extensions={[language]}
                             onChange={onCodeChange}
+                            onFocus={() => onFocusChange?.(true)}
+                            onBlur={() => {
+                                onFocusChange?.(false);
+                            }}
                             theme={`${isDarkMode ? "dark" : "light"}`}
                             basicSetup={{
                                 lineNumbers: true,
