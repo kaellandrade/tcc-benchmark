@@ -5,12 +5,17 @@ import {
     redo,
     selectLine,
     deleteLine,
-    toggleComment
+    toggleComment,
+    indentSelection,
+    selectAll,
+    indentMore,
+    indentLess
 } from "@codemirror/commands";
 import {
     Copy,
     ClipboardPaste,
     ArrowRightToLine,
+    ArrowLeftToLine,
     CornerDownLeft,
     Braces,
     Parentheses,
@@ -27,10 +32,10 @@ import {
     X as MultiplyIcon,
     TextSelect,
     Trash2,
-    MessageSquareCode
+    MessageSquareCode,
+    Wand2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { indentMore } from "@codemirror/commands";
 import { cn } from "@/lib/utils";
 
 interface QuickActionsToolbarProps {
@@ -42,6 +47,7 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
 
     if (!view) return null;
 
+    // --- Helpers (Mantidos iguais) ---
     const insertText = (text: string, cursorOffset = 0) => {
         const state = view.state;
         const ranges = state.selection.ranges;
@@ -82,37 +88,82 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
         e.preventDefault();
     };
 
+    const handleAutoIndent = () => {
+        const originalPos = view.state.selection.main.head;
+        selectAll(view);
+        indentSelection(view);
+        const newDocLength = view.state.doc.length;
+        const safePos = Math.min(originalPos, newDocLength);
+        view.dispatch({
+            selection: { anchor: safePos, head: safePos },
+            scrollIntoView: false
+        });
+        view.focus();
+    };
+
+    // --- Componente de Botão com Cores de Grupo ---
+    // groupColor define o "tema" do botão.
+    // As cores são sutis no fundo (bg-opacity-10/20) e fortes no ícone.
+    type GroupColor = "neutral" | "power" | "nav" | "structure" | "logic" | "danger";
 
     const ActionBtn = ({
                            icon: Icon,
                            label,
                            onClick,
+                           group = "neutral", // Padrão
                            className = ""
-                       }: any) => (
-        <Button
-            variant="ghost"
-            size="icon-sm"
-            onClick={(e) => { onClick(e); view.focus(); }}
-            onMouseDown={preventFocusSteal}
-            className={cn(
+                       }: {
+        icon?: any,
+        label?: string,
+        onClick: (e: any) => void,
+        group?: GroupColor,
+        className?: string
+    }) => {
 
-                "h-9 w-9 shrink-0 font-mono text-base border border-transparent shadow-sm transition-colors",
-                "bg-slate-100 hover:bg-slate-200",
-                "dark:bg-secondary/30 dark:hover:bg-secondary/50",
-                className
-            )}
-        >
-            {Icon ? <Icon className="size-4" /> : <span className="font-bold">{label}</span>}
-        </Button>
-    );
+        // Mapeamento de estilos por grupo
+        const groupStyles = {
+            neutral: "text-slate-600 bg-slate-100 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50",
+
+            // Laranja suave para "Poderes"
+            power: "text-amber-600 bg-amber-50 hover:bg-amber-100 dark:text-amber-400 dark:bg-amber-900/20 dark:hover:bg-amber-900/40",
+
+            // Azul para navegação
+            nav: "text-blue-600 bg-blue-50 hover:bg-blue-100 dark:text-blue-400 dark:bg-blue-900/20 dark:hover:bg-blue-900/40",
+
+            // Roxo (Primary) para estrutura
+            structure: "text-indigo-600 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-300 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40",
+
+            // Verde/Teal para lógica e matemática
+            logic: "text-teal-700 bg-teal-50 hover:bg-teal-100 dark:text-teal-300 dark:bg-teal-900/20 dark:hover:bg-teal-900/40",
+
+            // Vermelho para destrutivo
+            danger: "text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-900/20 dark:hover:bg-red-900/40"
+        };
+
+        return (
+            <Button
+                variant="ghost"
+                size="icon-sm"
+                onClick={(e) => { onClick(e); view.focus(); }}
+                onMouseDown={preventFocusSteal}
+                className={cn(
+                    "h-9 w-9 shrink-0 font-mono text-base border border-transparent/50 shadow-sm transition-all",
+                    groupStyles[group],
+                    className
+                )}
+            >
+                {Icon ? <Icon className="size-4" /> : <span className="font-bold">{label}</span>}
+            </Button>
+        );
+    };
 
     const Separator = () => <div className="w-px h-5 bg-border shrink-0 mx-1 opacity-50" />;
 
     return (
         <>
-
+            {/* Botão Flutuante */}
             <div className={cn(
-                "fixed bottom-20 right-4 z-50 transition-all duration-300 ease-in-out",
+                "absolute bottom-2 right-4 z-50 transition-all duration-300 ease-in-out",
                 !isOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-0 pointer-events-none"
             )}>
                 <Button onClick={() => setIsOpen(true)} onMouseDown={preventFocusSteal} size="icon-sm" className="h-10 w-10 rounded-full shadow-xl bg-primary text-primary-foreground hover:bg-primary/90">
@@ -120,10 +171,9 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
                 </Button>
             </div>
 
-
+            {/* Barra de Ferramentas */}
             <div
                 className={cn(
-
                     "fixed left-0 right-0 z-40 backdrop-blur border-t border-border shadow-lg transition-all duration-300 ease-in-out",
                     "bg-background/95 supports-[backdrop-filter]:bg-background/80",
                     isOpen ? "translate-y-0 opacity-100 relative" : "translate-y-full opacity-0 absolute bottom-0 pointer-events-none"
@@ -132,66 +182,60 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
             >
                 <div className="flex items-center gap-1.5 px-3 py-2 overflow-x-auto no-scrollbar touch-pan-x">
 
-
-                    <ActionBtn icon={ChevronDown} onClick={() => setIsOpen(false)} className="text-muted-foreground hover:bg-muted" />
-
-                    <ActionBtn icon={Undo2} onClick={() => undo(view)} className="text-slate-600 dark:text-slate-300" />
-                    <ActionBtn icon={Redo2} onClick={() => redo(view)} className="text-slate-600 dark:text-slate-300" />
-
-                    <Separator />
-
-                    <ActionBtn icon={Copy} onClick={handleCopy} className="text-slate-600 dark:text-slate-300" />
-                    <ActionBtn icon={ClipboardPaste} onClick={handlePaste} className="text-slate-600 dark:text-slate-300" />
+                    {/* ZONA 1: ADMIN (Cinza) */}
+                    <ActionBtn icon={ChevronDown} onClick={() => setIsOpen(false)} group="neutral" className="text-muted-foreground bg-transparent border-none shadow-none" />
+                    <ActionBtn icon={Undo2} onClick={() => undo(view)} group="neutral" />
+                    <ActionBtn icon={Redo2} onClick={() => redo(view)} group="neutral" />
 
                     <Separator />
 
-                    <ActionBtn
-                        icon={TextSelect}
-                        onClick={() => selectLine(view)}
-                        className="text-teal-600 bg-teal-50 hover:bg-teal-100 dark:text-tertiary dark:bg-tertiary/10 dark:hover:bg-tertiary/20"
-                    />
-                    <ActionBtn
-                        icon={MessageSquareCode}
-                        onClick={() => toggleComment(view)}
-                        className="text-teal-600 bg-teal-50 hover:bg-teal-100 dark:text-tertiary dark:bg-tertiary/10 dark:hover:bg-tertiary/20"
-                    />
-                    <ActionBtn
-                        icon={Trash2}
-                        onClick={() => deleteLine(view)}
-                        className="text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-500/10 dark:hover:bg-red-500/20"
-                    />
+                    <ActionBtn icon={Copy} onClick={handleCopy} group="neutral" />
+                    <ActionBtn icon={ClipboardPaste} onClick={handlePaste} group="neutral" />
 
                     <Separator />
 
-                    <ActionBtn icon={MoveLeft} onClick={() => moveCursor(-1)} className="bg-slate-200/50 dark:bg-secondary/50 text-foreground" />
-                    <ActionBtn icon={MoveRight} onClick={() => moveCursor(1)} className="bg-slate-200/50 dark:bg-secondary/50 text-foreground" />
-                    <ActionBtn icon={ArrowRightToLine} onClick={() => indentMore(view)} className="text-muted-foreground" />
+                    {/* ZONA 2: PODERES (Laranja) */}
+                    <ActionBtn icon={Wand2} onClick={handleAutoIndent} group="power" />
+                    <ActionBtn icon={TextSelect} onClick={() => selectLine(view)} group="power" />
+                    <ActionBtn icon={MessageSquareCode} onClick={() => toggleComment(view)} group="power" />
+                    <ActionBtn icon={Trash2} onClick={() => deleteLine(view)} group="danger" /> {/* Delete é vermelho */}
 
                     <Separator />
 
-                    <ActionBtn icon={Parentheses} onClick={() => insertText("()", -1)} className="text-foreground font-medium" />
-                    <ActionBtn icon={Braces} onClick={() => insertText("{}", -1)} className="text-foreground font-medium" />
-                    <ActionBtn label='""' onClick={() => insertText('""', -1)} className="text-foreground font-medium" />
-                    <ActionBtn label="''" onClick={() => insertText("''", -1)} className="text-foreground font-medium" />
+                    {/* ZONA 3: NAVEGAÇÃO (Azul) */}
+                    <ActionBtn icon={MoveLeft} onClick={() => moveCursor(-1)} group="nav" />
+                    <ActionBtn icon={MoveRight} onClick={() => moveCursor(1)} group="nav" />
+                    <ActionBtn icon={ArrowLeftToLine} onClick={() => indentLess(view)} group="nav" />
+                    <ActionBtn icon={ArrowRightToLine} onClick={() => indentMore(view)} group="nav" />
 
                     <Separator />
 
-                    <ActionBtn label=":" onClick={() => insertText(":")} className="text-indigo-600 dark:text-primary font-extrabold" />
-                    <ActionBtn label=";" onClick={() => insertText(";")} className="text-indigo-600 dark:text-primary font-extrabold" />
-                    <ActionBtn icon={Hash} onClick={() => insertText("# ")} className="text-indigo-600 dark:text-primary" />
-                    <ActionBtn label="=" onClick={() => insertText(" = ")} className="text-indigo-600 dark:text-primary font-extrabold" />
-
-                    <ActionBtn label="!" onClick={() => insertText("!")} className="text-indigo-600 dark:text-primary font-extrabold" />
-                    <ActionBtn label="&" onClick={() => insertText(" & ")} className="text-indigo-600 dark:text-primary font-extrabold" />
-                    <ActionBtn label="|" onClick={() => insertText(" | ")} className="text-indigo-600 dark:text-primary font-extrabold" />
+                    {/* ZONA 4: ESTRUTURA (Roxo) */}
+                    <ActionBtn icon={Parentheses} onClick={() => insertText("()", -1)} group="structure" />
+                    <ActionBtn icon={Braces} onClick={() => insertText("{}", -1)} group="structure" />
+                    <ActionBtn label='""' onClick={() => insertText('""', -1)} group="structure" />
+                    <ActionBtn label="''" onClick={() => insertText("''", -1)} group="structure" />
 
                     <Separator />
 
-                    <ActionBtn icon={Plus} onClick={() => insertText(" + ")} className="text-indigo-600 dark:text-primary" />
-                    <ActionBtn icon={Minus} onClick={() => insertText(" - ")} className="text-indigo-600 dark:text-primary" />
-                    <ActionBtn icon={MultiplyIcon} onClick={() => insertText(" * ")} className="text-indigo-600 dark:text-primary" />
-                    <ActionBtn icon={Divide} onClick={() => insertText(" / ")} className="text-indigo-600 dark:text-primary" />
+                    {/* ZONA 5: LÓGICA E MATEMÁTICA (Verde/Teal) */}
+                    <ActionBtn label=":" onClick={() => insertText(":")} group="logic" className="font-extrabold" />
+                    <ActionBtn label=";" onClick={() => insertText(";")} group="logic" className="font-extrabold" />
+                    <ActionBtn icon={Hash} onClick={() => insertText("# ")} group="logic" />
+                    <ActionBtn label="=" onClick={() => insertText(" = ")} group="logic" className="font-extrabold" />
 
+                    <ActionBtn label="!" onClick={() => insertText("!")} group="logic" className="font-extrabold" />
+                    <ActionBtn label="&" onClick={() => insertText(" & ")} group="logic" className="font-extrabold" />
+                    <ActionBtn label="|" onClick={() => insertText(" | ")} group="logic" className="font-extrabold" />
+
+                    <Separator />
+
+                    <ActionBtn icon={Plus} onClick={() => insertText(" + ")} group="logic" />
+                    <ActionBtn icon={Minus} onClick={() => insertText(" - ")} group="logic" />
+                    <ActionBtn icon={MultiplyIcon} onClick={() => insertText(" * ")} group="logic" />
+                    <ActionBtn icon={Divide} onClick={() => insertText(" / ")} group="logic" />
+
+                    {/* Botão Enter (Destaque final) */}
                     <Button
                         size="icon-sm"
                         onClick={() => insertText("\n")}
