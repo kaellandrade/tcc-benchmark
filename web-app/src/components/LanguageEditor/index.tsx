@@ -8,9 +8,10 @@ import { CodeEditor } from "@/components/CodeEditor";
 interface LanguageEditorProps {
   languageId: string;
   isDarkMode?: boolean;
+  onFocusChange?: (focused: boolean) => void;
 }
 
-export function LanguageEditor({ languageId, isDarkMode }: LanguageEditorProps) {
+export function LanguageEditor({ languageId, isDarkMode, onFocusChange }: LanguageEditorProps) {
   const config = getLanguage(languageId);
   const [runtime, setRuntime] = useState<LanguageRuntime | null>(null);
   const [extension, setExtension] = useState<Extension | null>(null);
@@ -168,6 +169,7 @@ export function LanguageEditor({ languageId, isDarkMode }: LanguageEditorProps) 
       runCode={runCode}
       output={output}
       isDarkMode={isDarkMode}
+      onFocusChange={onFocusChange}
     />
   );
 }

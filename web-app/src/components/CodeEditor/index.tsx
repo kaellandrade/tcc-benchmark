@@ -21,6 +21,7 @@ import {OutputPanel} from "@/components/OutputPanel";
 import {NewFileDialog} from "@/components/NewFileDialog";
 import {EditorView} from "@codemirror/view";
 import {QuickActionsToolbar} from "@/components/QuickActionsToolbar";
+import {dcompLabEditorTema} from "@/config/editorTheme.ts";
 
 interface FileTab {
     id: string;
@@ -42,6 +43,7 @@ interface CodeEditorProps {
     runCode: () => Promise<void>;
     output: string;
     isDarkMode?: undefined | boolean;
+    onFocusChange?: (focused: boolean) => void;
 }
 
 export function CodeEditor({
@@ -58,6 +60,7 @@ export function CodeEditor({
                                runCode,
                                output,
                                isDarkMode,
+                               onFocusChange
                            }: CodeEditorProps) {
     const [isNewFileDialogOpen, setIsNewFileDialogOpen] = useState(false);
     const activeFile = files.find((f) => f.id === activeFileId);
@@ -85,7 +88,7 @@ export function CodeEditor({
 
             <div
                 className="flex-none flex items-center justify-between px-4 py-2 landscape:py-1 border-b border-border/50">
-         <span className="text-label font-medium text-foreground landscape:hidden">
+         <span className="text-label font-medium text-foreground">
           Editor {languageName}
         </span>
                 <div className="flex items-center gap-2">
@@ -179,8 +182,12 @@ export function CodeEditor({
                             value={activeFile?.content || ""}
                             onCreateEditor={(view) => setEditorView(view)}
                             className="flex-1 w-full overflow-hidden [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto text-base"
-                            extensions={[language]}
+                            extensions={[language, dcompLabEditorTema]}
                             onChange={onCodeChange}
+                            onFocus={() => onFocusChange?.(true)}
+                            onBlur={() => {
+                                onFocusChange?.(false);
+                            }}
                             theme={`${isDarkMode ? "dark" : "light"}`}
                             basicSetup={{
                                 lineNumbers: true,
