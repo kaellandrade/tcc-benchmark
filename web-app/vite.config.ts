@@ -24,7 +24,9 @@ export default defineConfig({
                 "background_color": "#826FFF",
                 "theme_color": "#A459D1",
                 "scope": ".",
-                "description": "Aplicativo para compilação de códigos offline em diferentes plataformas.",
+                "orientation":"portrait",
+                "description": "IDE completa para compilar Python, C e Java offline. Programe em qualquer lugar com o DcompLab.",
+                "categories": ["education", "productivity", "utilities"],
                 "icons": [
                     {
                         "src": "pwa-icons/dcomp-lab-icon-pwa-128x.png",
@@ -65,6 +67,64 @@ export default defineConfig({
                         "src": "pwa-icons/dcomp-lab-icon-pwa-512x.png",
                         "sizes": "512x512",
                         "type": "image/png"
+                    }
+                ],
+                "screenshots":[
+                    {
+                        "src": "screenshots/01_splash.jpg",
+                        "sizes": "1080x2340",
+                        "type": "image/jpeg",
+                        "form_factor": "narrow",
+                        "label": "Tela de Splash"
+                    },
+                    {
+                        "src": "screenshots/02_python_dark.jpg",
+                        "sizes": "1080x2340",
+                        "type": "image/jpeg",
+                        "form_factor": "narrow",
+                        "label": "Ambiente Python Dark"
+                    },
+                    {
+                        "src": "screenshots/03_java_dark.jpg",
+                        "sizes": "1080x2340",
+                        "type": "image/jpeg",
+                        "form_factor": "narrow",
+                        "label": "Ambiente Java Dark"
+                    },
+                    {
+                        "src": "screenshots/04_java_dark_saida",
+                        "sizes": "1080x2340",
+                        "type": "image/jpeg",
+                        "form_factor": "narrow",
+                        "label": "Ambiente Java Dark Saída"
+                    },
+                    {
+                        "src": "screenshots/05_java_light.jpg",
+                        "sizes": "1080x2340",
+                        "type": "image/jpeg",
+                        "form_factor": "narrow",
+                        "label": "Ambiente Java Light"
+                    },
+                    {
+                        "src": "screenshots/06_java_light_saida.jpg",
+                        "sizes": "1080x2340",
+                        "type": "image/jpeg",
+                        "form_factor": "narrow",
+                        "label": "Ambiente Java Light Saída"
+                    },
+                    {
+                        "src": "screenshots/07_desk_light.png",
+                        "sizes": "2560x1438",
+                        "type": "image/png",
+                        "form_factor": "wide",
+                        "label": "Ambiente Desktop Light"
+                    },
+                    {
+                        "src": "screenshots/08_desk_dark.png",
+                        "sizes": "2560x1438",
+                        "type": "image/png",
+                        "form_factor": "wide",
+                        "label": "Ambiente Desktop Dark"
                     }
                 ]
             },
