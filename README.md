@@ -1,124 +1,104 @@
-<p align="center">
-  <img src="https://th.bing.com/th/id/R.0063bd4673d6be8fac1c2a927b48626d?rik=XFXIBP3%2fzoDGeQ&riu=http%3a%2f%2finct.info%2fpt%2fimages%2finstituicao%2fufs.png&ehk=3z4Ja%2bMOAw1%2fqjSM4KknkiSaRCrQRcL%2bnHXe%2fQWMAEc%3d&risl=&pid=ImgRaw&r=0" alt="Universidade Federal de Sergipe" width="30%" title="Universidade federal de Sergipe">
-  <img src="https://avatars0.githubusercontent.com/u/26286260?s=400&v=4" alt="PetIndica" width="30%" style="border-radius:50%;" title="Departamento de Computação">
-</p>
+<div align="center">
+  <img src="web-app/src/assets/for-light/dcomp-lab-log-header-for-light.png" alt="Logo DcompLab" width="400px" />
+  <br />
+  <br />
 
-----
+  <p>
+    <a href="https://react.dev/">
+      <img src="https://img.shields.io/badge/React-19.0-blue?logo=react" alt="React" />
+    </a>
+    <a href="https://vitejs.dev/">
+      <img src="https://img.shields.io/badge/Vite-7.0-646CFF?logo=vite" alt="Vite" />
+    </a>
+    <a href="https://www.typescriptlang.org/">
+      <img src="https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript" alt="TypeScript" />
+    </a>
+    <a href="https://web.dev/progressive-web-apps/">
+      <img src="https://img.shields.io/badge/PWA-Ready-purple?logo=pwa" alt="PWA" />
+    </a>
+    <a href="LICENSE">
+      <img src="https://img.shields.io/badge/License-MIT-green" alt="License" />
+    </a>
+  </p>
 
-# Complexidade de Algoritmos
+<h3>Ambiente de Desenvolvimento PWA Acessível e Multilinguagem via WebAssembly.</h3>
+</div>
 
-Este projeto contém a implementação de diversos algoritmos clássicos da computação, com foco na análise e comparação de desempenho em diferentes plataformas, como dispositivos móveis e embarcados.
+<br />
 
-## Notação Big O
+## 📖 Sobre o Projeto
 
-A **notação Big O** é utilizada para descrever o comportamento assintótico de algoritmos, ou seja, como eles se comportam em termos de desempenho à medida que o tamanho da entrada cresce.
+O **DcompLab** é uma IDE (Ambiente de Desenvolvimento Integrado) projetada para democratizar o ensino de programação. Diferente de soluções tradicionais que dependem de servidores pesados, o DcompLab utiliza **WebAssembly (WASM)** e tecnologias de **Edge Computing** para compilar e executar códigos diretamente no navegador do usuário.
 
+Isso permite que estudantes programem em **Java, C e Python** mesmo em dispositivos com hardware limitado ou **sem conexão constante com a internet** (Offline-First).
 
+### 🚀 Principais Diferenciais
 
-Ela pode representar:
+* **Execução Client-Side:** Todo o processamento ocorre no dispositivo do usuário. Zero custo de servidor backend.
+* **Suporte Offline (PWA):** Instale como um aplicativo nativo no Android, iOS ou Desktop e code sem internet.
+* **Multilinguagem:**
+  * ☕ **Java:** Virtualização da JVM no navegador via [CheerpJ](https://cheerpj.com/).
+  * 🐍 **Python:** Execução via interpretador WASM com [Pyodide](https://pyodide.org/en/stable/).
+  * ⚙️ **C:** Compilação e execução via [JSCPP](https://github.com/JSCPP/JSCPP).
+* **Mobile First:** Interface pensada para telas de toque, com barra de ações rápidas (Tab, setas, símbolos) para facilitar a codificação em celulares.
+* **Design Moderno:** Temas Claro/Escuro, animações fluídas e editor de código robusto.
 
-- **O(f(n)) — Notação Big O**:  
-  Representa o **limite superior** do tempo de execução. Indica o pior caso possível (mais utilizado).  
-  Exemplo: `O(n²)` significa que o algoritmo nunca será pior do que `n²` passos.
+---
 
-- **Ω(f(n)) — Notação Ômega**:  
-  Representa o **limite inferior**. Indica o melhor caso possível.  
-  Exemplo: `Ω(n)` significa que o algoritmo levará **pelo menos** `n` passos em algumas situações.
+## 📸 Screenshots
 
-- **Θ(f(n)) — Notação Teta**:  
-  Representa o **caso médio/exato**, ou seja, quando o limite superior e inferior são iguais.  
-  Exemplo: `Θ(n log n)` indica que o algoritmo sempre roda em `n log n` passos, independentemente do caso.
+| Mobile Dark | Mobile Light | Desktop |
+|:---:|:---:|:---:|
+| <img src="web-app/public/screenshots/03_java_dark.jpg" width="200" /> | <img src="web-app/public/screenshots/05_java_light.jpg" width="200" /> | <img src="web-app/public/screenshots/07_desk_light.png" width="400" /> |
 
+---
 
-## Complexidades clássicas
+## 🛠️ Tecnologias Utilizadas
 
-- `O(1)` → tempo constante, não importa o tamanho da entrada
-- `O(n)` → cresce linearmente com a entrada
-- `O(n²)` → cresce exponencialmente com o quadrado da entrada
-- `O(log n)` → crescimento logarítmico, muito eficiente
-- `O(n log n)` → crescimento intermediário, comum em algoritmos eficientes de ordenação
+Este projeto foi construído com uma stack moderna focada em performance e experiência do usuário:
 
-# 📊 Lista de Algoritmos e Complexidades
+* **Core:** [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vitejs.dev/)
+* **Estilização:** [TailwindCSS v4](https://tailwindcss.com/), [Shadcn/UI](https://ui.shadcn.com/) (Radix UI)
+* **Animações:** [Framer Motion](https://www.framer.com/motion/)
+* **Editor de Código:** [CodeMirror 6](https://codemirror.net/) (@uiw/react-codemirror)
+* **Compilação Web:**
+  * `JSCPP` (Para execução de C)
+  * `CheerpJ` (Integração para Java)
+  * `Pyodide` (Integração para Python)
+* **PWA:** `vite-plugin-pwa` (Service Workers, Cache Strategy)
+* **Icons:** [Lucide React](https://lucide.dev/)
 
-## 1. O(1) — Tempo Constante
+---
 
-> O tempo de execução **não cresce com o tamanho da entrada**.
+## 📦 Como Rodar Localmente
 
-| Algoritmo/Operação                        | Descrição                               |
-|-------------------------------------------|-----------------------------------------|
-| Acesso a elemento de um array `arr[i]`    | Acesso direto à posição                 |
-| Inserção/remover do final de uma pilha    | Operações em estruturas tipo `stack`    |
-| Verificar se número é par `n % 2 == 0`    | Operação aritmética simples             |
-| Trocar dois valores de variáveis          | Operações fixas                         |
-| Buscar em `dict` ou `hash map` (em média) | Acesso em tabelas hash bem distribuídas |
+Pré-requisitos: Certifique-se de ter o [Node.js](https://nodejs.org/) instalado.
 
+1.  **Clone o repositório:**
+    ```bash
+    git clone git@github.com:kaellandrade/tcc-benchmark.git
+    cd web-app
+    ```
 
-## 2. O(log n) — Logarítmica
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    # ou
+    yarn install
+    ```
 
-> O tempo **cresce lentamente** conforme a entrada aumenta.
+3.  **Inicie o servidor de desenvolvimento:**
+    ```bash
+    npm run dev
+    ```
 
-| Algoritmo                                              | Descrição                               |
-|--------------------------------------------------------|-----------------------------------------|
-| Busca Binária                                          | Divide a busca pela metade a cada passo |
-| Inserção/remoção em árvore balanceada (AVL, Red-Black) | Estruturas auto-balanceadas             |
-| Heapify em uma heap binária                            | Ajuste de árvore de prioridade          |
-| Encontrar potência usando exponenciação rápida         | Divide problema recursivamente          |
-| Contagem de bits em um número com técnicas de bitwise  | Divide bits com operações lógicas       |
+4.  **Acesse no navegador:**
+    Abra `http://localhost:5173` para ver a aplicação rodando.
 
-## 3. O(n) Linear
+### Build para Produção
 
-> Cresce proporcionalmente ao tamanho da entrada.
+Para gerar a versão otimizada com PWA ativo:
 
-| Algoritmo                           | Descrição                       |
-|:------------------------------------|:--------------------------------|
-| Busca Linear                        | Verifica cada elemento da lista |
-| Soma de elementos de um array       | Percorre todos os elementos     |
-| Verificação de palíndromo (simples) | Compara pares em uma string     |
-| Contar frequência de elementos      | Uma passada pela lista          |
-| Remoção de duplicatas com set       | Uma varredura simples           |
-
-## 4. O(n log n) Quase linear 
-
-> É melhor tempo possível para muitos algotimos de ordenação baseados em comparação.
-
-| Algoritmo                                              | Descrição                    |
-|:-------------------------------------------------------|:-----------------------------|
-| Merge Sort                                             | Divide e conquista com fusão |
-| Quick Sort (médio caso)                                | Particionamento recursivo    |
-| Heap Sort                                              | Ordenação com heaps          |
-| Algoritmos eficientes de transformada rápida (FFT)     | Sinais e imagens             |
-| Algoritmos de construção de árvore de sufixo eficiente | Strings e bioinformática     |
-
-## 5. O(n²) Quadrática
-
-> Tempo crescer rapidamente com o tamanho da entrada. Comum em algoritimos simples de ordenação ou comparação de pares. (geralmente utilizado para didática)
-
-| Algoritmo                           | Descrição                              |
-|:------------------------------------|:---------------------------------------|
-| Bubble Sort                         | Compara pares adjacentes               |
-| Insertion Sort                      | Insere elementos em ordem crescente    |
-| Selection Sort                      | Escolhe o menor elemento repetidamente |
-| Verificar duplicatas com dois loops | Compara cada par                       |
-| Multiplicação de matrizes (simples) | Combinação de linhas/colunas           |
-
-# Extras
-
-## O(2^n) Exponencial
-
-| Algoritmo                        | Descrição                         |
-|:---------------------------------|:----------------------------------|
-| Força bruta para subconjuntos    | Problemas de conjuntos ou mochila |
-| Torre de Hanoi                   | Problema clássico recursivo       |
-| Fibonacci recursivo puro         | Sem memoização                    |
-| Branch and Bound em alguns casos | Árvores de decisão                |
-| Verificações de permutação       | Gerar todas as ordens possíveis   |
-
-## O(n!) Fatorial
-
-| Algoritmo                                  | Descrição                            |
-|:-------------------------------------------|:-------------------------------------|
-| Geração de todas as permutações            | Combinatória                         |
-| Força bruta para o Caxeiro Viajante (TSP)  | Todas as ordens de cidades           |
-| Backtracking sem poda em sudoku            | Todas as possibilidades              |
-| Resolução de quebra-cabeças por permutação | Exploração total                     |
-| Ordenações por força bruta                 | Testa todas as permutações possíveis | 
+```bash
+npm run build
+npm run preview
