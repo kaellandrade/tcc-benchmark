@@ -59,7 +59,7 @@ export function NotFound({
         <Button
           onClick={() => navigate("/")}
           variant="outline"
-          className="gap-2 px-8 cursor-pointer"
+          className="gap-2 px-8 cursor-pointer hover:text-primary"
         >
           <Home className="size-4" />
           Home
