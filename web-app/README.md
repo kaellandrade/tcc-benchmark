@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="web-app/src/assets/for-light/dcomp-lab-log-header-for-light.png" alt="Logo DcompLab" width="400px" />
+  <img src="src/assets/for-light/dcomp-lab-log-header-for-light.png" alt="Logo DcompLab" width="400px" />
   <br />
   <br />
 
@@ -49,7 +49,7 @@ Isso permite que estudantes programem em **Java, C e Python** mesmo em dispositi
 
 | Mobile Dark | Mobile Light | Desktop |
 |:---:|:---:|:---:|
-| <img src="web-app/public/screenshots/03_java_dark.jpg" width="200" /> | <img src="web-app/public/screenshots/05_java_light.jpg" width="200" /> | <img src="web-app/public/screenshots/07_desk_light.png" width="400" /> |
+| <img src="public/screenshots/03_java_dark.jpg" width="200" /> | <img src="public/screenshots/05_java_light.jpg" width="200" /> | <img src="public/screenshots/07_desk_light.png" width="400" /> |
 
 ---
 
