@@ -19,7 +19,7 @@ export function Header({
             className={`relative z-10 flex items-center justify-between px-4 py-1 transition-colors duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.25)] ${
                 isDarkMode
                     ? "bg-secondary/80 backdrop-blur-md border-b border-secondary/20"
-                    : "bg-secondary/10"
+                    : "bg-background border-b border-border"
             }`}
         >
             <Button

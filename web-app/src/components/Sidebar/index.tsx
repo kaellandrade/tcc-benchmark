@@ -1,170 +1,205 @@
 import React from "react";
 import {
-  Code2,
-  Swords,
-  Info,
-  X,
-  Moon,
-  Sun,
+    Code2,
+    Swords,
+    Info,
+    X,
+    Moon,
+    Sun,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
 } from "@/components/ui/sheet";
+import { useNavigate, useLocation } from "react-router-dom"; // 1. Importar useLocation
+import { cn } from "@/lib/utils"; // Importante para mesclar classes condicionalmente
 import dcompLabLogHeaderForDark from "@/assets/for-dark/dcomp-lab-log-header-for-dark.png";
 import dcompLabLogHeaderForLight from "@/assets/for-light/dcomp-lab-log-header-for-light.png";
 
 interface SidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onThemeToggle: () => void;
-  isDarkMode: boolean;
+    isOpen: boolean;
+    onClose: () => void;
+    onThemeToggle: () => void;
+    isDarkMode: boolean;
 }
 
 interface MenuItem {
-  icon: React.ReactNode;
-  label: string;
-  onClick?: () => void;
+    icon: React.ReactNode;
+    label: string;
+    path?: string; // 2. Adicionar propriedade opcional 'path'
+    onClick?: () => void;
 }
 
-const menuItems: MenuItem[] = [
-  {
-    icon: <Code2 className="size-5" />,
-    label: "Explorar códigos",
-  },
-  {
-    icon: <Swords className="size-5" />,
-    label: "Lista de desafios",
-  },
-];
-
-const secondaryItems: MenuItem[] = [
-  {
-    icon: <Info className="size-5" />,
-    label: "Sobre o DcompLab",
-  },
-];
-
 export function Sidebar({
-                          isOpen,
-                          onClose,
-                          onThemeToggle,
-                          isDarkMode,
+                            isOpen,
+                            onClose,
+                            onThemeToggle,
+                            isDarkMode,
                         }: SidebarProps) {
-  return (
-      <Sheet open={isOpen} onOpenChange={onClose}>
-        <SheetContent
-            side="left"
-            className="w-[400px] p-0 flex gap-0 flex-col bg-background border-r border-border"
-        >
-          <SheetHeader
-              className={`relative z-20 flex-row items-center justify-between px-4 py-1 transition-colors duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.25)] ${
-                  isDarkMode
-                      ? "bg-secondary/80 border-b border-secondary/20"
-                      : "bg-secondary/10"
-              }`}
-          >
-            <Button
-                variant="ghost"
-                size="icon"
-                onClick={onClose}
-                className={
-                  isDarkMode
-                      ? "text-secondary-foreground hover:bg-secondary-foreground/10 cursor-pointer"
-                      : "text-primary hover:bg-primary/10 cursor-pointer"
-                }
+    const navigate = useNavigate();
+    const location = useLocation(); // 3. Obter a rota atual
+
+    // Helper para verificar se a rota está ativa
+    const isActive = (path?: string) => {
+        if (!path) return false;
+        // Compara a rota exata (ex: "/about") ou se é a home ("/")
+        return location.pathname === path;
+    };
+
+    const menuItems: MenuItem[] = [
+        {
+            icon: <Code2 className="size-5" />,
+            label: "Explorar códigos",
+            path: "/", // Associamos a Home a este item
+            onClick: () => {
+                navigate("/");
+                onClose();
+            }
+        },
+        {
+            icon: <Swords className="size-5" />,
+            label: "Lista de desafios",
+            // Sem path por enquanto, pois é funcionalidade futura
+            onClick: () => {
+                onClose();
+            }
+        },
+    ];
+
+    const secondaryItems: MenuItem[] = [
+        {
+            icon: <Info className="size-5" />,
+            label: "Sobre o DcompLab",
+            path: "/about", // Associamos a rota /about
+            onClick: () => {
+                navigate("/about");
+                onClose();
+            },
+        },
+    ];
+
+    // Componente interno para renderizar o item de lista (Evita repetição de código)
+    const renderMenuItem = (item: MenuItem, index: number) => {
+        const active = isActive(item.path);
+
+        return (
+            <li key={index}>
+                <button
+                    onClick={item.onClick}
+                    className={cn(
+                        "flex items-center gap-3 w-full px-3 py-3 rounded-md transition-all duration-200 cursor-pointer text-paragraph",
+                        // Lógica de Estilos Condicionais:
+                        active
+                            ? "bg-primary/15 text-primary font-bold shadow-sm border-l-4 border-primary" // Estilo ATIVO
+                            : "text-foreground hover:bg-background/40 hover:text-foreground/80 border-l-4 border-transparent" // Estilo INATIVO
+                    )}
+                >
+                    {/* Se estiver ativo, o ícone também pode ganhar um destaque extra se quiser */}
+                    <span className={cn(active ? "text-primary" : "text-muted-foreground")}>
+            {item.icon}
+          </span>
+                    <span>{item.label}</span>
+                </button>
+            </li>
+        );
+    };
+
+    return (
+        <Sheet open={isOpen} onOpenChange={onClose}>
+            <SheetContent
+                side="left"
+                className="w-[400px] p-0 flex gap-0 flex-col bg-background border-r border-border"
             >
-              <X className="size-6" />
-            </Button>
+                <SheetHeader
+                    className={`relative z-20 flex-row items-center justify-between px-4 py-1 transition-colors duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.25)] ${
+                        isDarkMode
+                            ? "bg-secondary/80 border-b border-secondary/20"
+                            : "bg-secondary/10"
+                    }`}
+                >
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={onClose}
+                        className={
+                            isDarkMode
+                                ? "text-secondary-foreground hover:bg-secondary-foreground/10 cursor-pointer"
+                                : "text-primary hover:bg-primary/10 cursor-pointer"
+                        }
+                    >
+                        <X className="size-6" />
+                    </Button>
 
-            <SheetTitle className="m-0 flex items-center justify-center">
-              <img
-                  src={
-                    isDarkMode
-                        ? dcompLabLogHeaderForDark
-                        : dcompLabLogHeaderForLight
-                  }
-                  alt="Logo DcompLab"
-                  className="h-5 w-auto object-contain"
-              />
-            </SheetTitle>
+                    <SheetTitle className="m-0 flex items-center justify-center">
+                        <img
+                            src={
+                                isDarkMode
+                                    ? dcompLabLogHeaderForDark
+                                    : dcompLabLogHeaderForLight
+                            }
+                            alt="Logo DcompLab"
+                            className="h-5 w-auto object-contain"
+                        />
+                    </SheetTitle>
 
-            <Button
-                variant="ghost"
-                size="icon"
-                onClick={onThemeToggle}
-                className={
-                  isDarkMode
-                      ? "text-secondary-foreground hover:bg-secondary-foreground/10 cursor-pointer"
-                      : "text-primary hover:bg-primary/10 cursor-pointer"
-                }
-            >
-              {isDarkMode ? (
-                  <Moon className="size-5" />
-              ) : (
-                  <Sun className="size-5" />
-              )}
-            </Button>
-          </SheetHeader>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={onThemeToggle}
+                        className={
+                            isDarkMode
+                                ? "text-secondary-foreground hover:bg-secondary-foreground/10 cursor-pointer"
+                                : "text-primary hover:bg-primary/10 cursor-pointer"
+                        }
+                    >
+                        {isDarkMode ? (
+                            <Moon className="size-5" />
+                        ) : (
+                            <Sun className="size-5" />
+                        )}
+                    </Button>
+                </SheetHeader>
 
-          <div
-              className={`flex-1 flex flex-col transition-all duration-300 ${
-                  isDarkMode
-                      ? "bg-gradient-to-b from-secondary/80 to-background" 
-                      : "bg-gradient-to-b from-secondary/30 to-background" 
-              }`}
-          >
-            <nav className="flex-1 flex flex-col px-4 py-4">
-              <ul className="space-y-1">
-                {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <button
-                          onClick={item.onClick}
-                          className="flex items-center gap-3 w-full px-3 py-3 rounded-md text-paragraph text-foreground hover:bg-background/40 transition-colors cursor-pointer"
-                      >
-                        {item.icon}
-                        <span>{item.label}</span>
-                      </button>
-                    </li>
-                ))}
-              </ul>
+                <div
+                    className={`flex-1 flex flex-col transition-all duration-300 ${
+                        isDarkMode
+                            ? "bg-gradient-to-b from-secondary/80 to-background"
+                            : "bg-gradient-to-b from-secondary/30 to-background"
+                    }`}
+                >
+                    <nav className="flex-1 flex flex-col px-4 py-4">
+                        {/* Lista Principal */}
+                        <ul className="space-y-2">
+                            {menuItems.map((item, index) => renderMenuItem(item, index))}
+                        </ul>
 
-              <div className="my-4 border-t border-dashed border-foreground/10" />
+                        <div className="my-4 border-t border-dashed border-foreground/10" />
 
-              <ul className="space-y-1">
-                {secondaryItems.map((item, index) => (
-                    <li key={index}>
-                      <button
-                          onClick={item.onClick}
-                          className="flex items-center gap-3 w-full px-3 py-3 rounded-md text-paragraph text-foreground hover:bg-background/40 transition-colors cursor-pointer"
-                      >
-                        {item.icon}
-                        <span>{item.label}</span>
-                      </button>
-                    </li>
-                ))}
-              </ul>
-            </nav>
+                        {/* Lista Secundária */}
+                        <ul className="space-y-2">
+                            {secondaryItems.map((item, index) => renderMenuItem(item, index))}
+                        </ul>
+                    </nav>
 
-            <footer className="px-4 py-4 border-t border-foreground/10 flex justify-center">
-              <div className="flex items-center gap-2 text-muted-foreground text-paragraph-small cursor-pointer">
-                <img
-                    src={
-                      isDarkMode
-                          ? dcompLabLogHeaderForDark
-                          : dcompLabLogHeaderForLight
-                    }
-                    alt="Logo DcompLab"
-                    className="h-3 w-auto object-contain"
-                />
-                <span className="underline underline-offset-8">0.1</span>
-              </div>
-            </footer>
-          </div>
-        </SheetContent>
-      </Sheet>
-  );
+                    <footer className="px-4 py-4 border-t border-foreground/10 flex justify-center">
+                        <div className="flex items-center gap-2 text-muted-foreground text-paragraph-small cursor-pointer">
+                            <img
+                                src={
+                                    isDarkMode
+                                        ? dcompLabLogHeaderForDark
+                                        : dcompLabLogHeaderForLight
+                                }
+                                alt="Logo DcompLab"
+                                className="h-3 w-auto object-contain"
+                            />
+                            <span className="underline underline-offset-8">0.1</span>
+                        </div>
+                    </footer>
+                </div>
+            </SheetContent>
+        </Sheet>
+    );
 }
