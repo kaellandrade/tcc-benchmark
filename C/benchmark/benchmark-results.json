@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-01-20T00:16:07.285Z",
+  "platform": "win32",
+  "compiler": "gcc",
+  "iterationLevels": [
+    100,
+    500,
+    1000,
+    2000,
+    5000
+  ],
+  "results": [
+    {
+      "iterations": 100,
+      "nativeTimeSeconds": 0.04551350000000002,
+      "jscppTimeSeconds": 2.2149614,
+      "ratio": 48.66603095784765
+    },
+    {
+      "iterations": 500,
+      "nativeTimeSeconds": 0.04826209999999992,
+      "jscppTimeSeconds": 9.3121531,
+      "ratio": 192.94960434792551
+    },
+    {
+      "iterations": 1000,
+      "nativeTimeSeconds": 0.04238630000000012,
+      "jscppTimeSeconds": 19.6246538,
+      "ratio": 462.99520835741606
+    },
+    {
+      "iterations": 2000,
+      "nativeTimeSeconds": 0.05124920000000202,
+      "jscppTimeSeconds": 38.853595999999996,
+      "ratio": 758.1307805780083
+    },
+    {
+      "iterations": 5000,
+      "nativeTimeSeconds": 0.0495104999999894,
+      "jscppTimeSeconds": 97.666032,
+      "ratio": 1972.6327142731523
+    }
+  ]
+}

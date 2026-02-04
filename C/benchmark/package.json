@@ -1,0 +1,14 @@
+{
+  "name": "c-benchmark",
+  "version": "1.0.0",
+  "description": "Benchmark comparing Native C vs JSCPP (Browser IDE) execution across different input sizes",
+  "type": "module",
+  "scripts": {
+    "benchmark": "node run-benchmark.js",
+    "benchmark:jscpp": "node run-jscpp.js",
+    "benchmark:native": "node run-native.js"
+  },
+  "dependencies": {
+    "JSCPP": "^2.0.9"
+  }
+}
