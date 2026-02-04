@@ -131,11 +131,6 @@ export function CodeEditor({
                   <Save className="size-4" />
                   <span>Salvar</span>
                 </DropdownMenuItem>
-
-                <DropdownMenuItem className="cursor-pointer gap-2 py-2.5 focus:bg-secondary/20 focus:text-foreground dark:focus:bg-secondary/20 dark:focus:text-white">
-                  <Download className="size-4" />
-                  <span>Importar arquivo</span>
-                </DropdownMenuItem>
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
