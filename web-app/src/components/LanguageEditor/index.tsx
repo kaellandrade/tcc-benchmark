@@ -1,9 +1,13 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import type { Extension } from "@uiw/react-codemirror";
 
 import { getLanguage } from "@/lib/languageRegistry";
 import type { LanguageRuntime, FileTab } from "@/models/language";
 import { CodeEditor } from "@/components/CodeEditor";
+import {
+  getLanguageData,
+  updateLanguageFiles,
+} from "@/lib/codeStorage";
 
 interface LanguageEditorProps {
   languageId: string;
@@ -21,12 +25,62 @@ export function LanguageEditor({ languageId, isDarkMode, onFocusChange }: Langua
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const previousLanguageId = useRef<string | null>(null);
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const readyLanguageRef = useRef<string | null>(null);
 
+  // Limpa timer ao desmontar
+  useEffect(() => {
+    return () => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    };
+  }, []);
+
+  const saveNow = useCallback((langId: string, f: FileTab[], activeId: string) => {
+    updateLanguageFiles(langId, f, activeId).catch(console.error);
+  }, []);
+
+  const scheduleSave = useCallback((langId: string, f: FileTab[], activeId: string) => {
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      saveNow(langId, f, activeId);
+    }, 1000);
+  }, [saveNow]);
+
+  // Auto-save: só salva quando a linguagem já foi carregada
+  useEffect(() => {
+    if (
+      files.length > 0 &&
+      activeFileId &&
+      readyLanguageRef.current === languageId
+    ) {
+      scheduleSave(languageId, files, activeFileId);
+    }
+  }, [files, activeFileId, languageId, scheduleSave]);
+
+  // Salva antes de fechar a aba/janela
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (files.length > 0 && activeFileId && readyLanguageRef.current) {
+        saveNow(readyLanguageRef.current, files, activeFileId);
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [files, activeFileId, saveNow]);
+
+  // Effect principal: inicializa runtime + restaura/cria arquivos
+  // Estrutura idêntica ao original, com adição de restauração do IndexedDB
   useEffect(() => {
     if (!config) return;
 
     const languageChanged = previousLanguageId.current !== languageId;
     previousLanguageId.current = languageId;
+
+    if (languageChanged) {
+      // Cancela save pendente da linguagem anterior
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      readyLanguageRef.current = null;
+    }
 
     const init = async () => {
       setIsLoading(true);
@@ -40,13 +94,24 @@ export function LanguageEditor({ languageId, isDarkMode, onFocusChange }: Langua
       setExtension(ext);
 
       if (languageChanged) {
-        const initialFile: FileTab = {
-          id: crypto.randomUUID(),
-          name: `main${config.fileExtension}`,
-          content: config.defaultCode,
-        };
-        setFiles([initialFile]);
-        setActiveFileId(initialFile.id);
+        // Tenta restaurar arquivos salvos do IndexedDB
+        const saved = await getLanguageData(languageId);
+
+        if (saved && saved.files.length > 0) {
+          setFiles(saved.files);
+          setActiveFileId(saved.activeFileId);
+        } else {
+          const initialFile: FileTab = {
+            id: crypto.randomUUID(),
+            name: `main${config.fileExtension}`,
+            content: config.defaultCode,
+          };
+          setFiles([initialFile]);
+          setActiveFileId(initialFile.id);
+        }
+
+        // Libera auto-save
+        readyLanguageRef.current = languageId;
       }
 
       setIsLoading(false);
