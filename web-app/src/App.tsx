@@ -1,25 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "@/pages/Home";
 import { NotFound } from "@/pages/NotFound";
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import {About} from "@/pages/About";
+import { useUserConfig } from "@/hooks/useUserConfig";
 
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { isDarkMode, toggleTheme } = useUserConfig();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDarkMode]);
-
-  const handleThemeToggle = () => {
-    setIsDarkMode(!isDarkMode);
-  };
 
   const handleSidebarOpen = () => {
     setIsSidebarOpen(true);
@@ -33,7 +22,7 @@ const App = () => {
     isSidebarOpen,
     onSidebarOpen: handleSidebarOpen,
     onSidebarClose: handleSidebarClose,
-    onThemeToggle: handleThemeToggle,
+    onThemeToggle: toggleTheme,
     isDarkMode,
   };
 
