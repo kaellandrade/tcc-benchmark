@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
-import { Play, MoreVertical, Save, Download, FilePlus } from "lucide-react";
+import { Play, MoreVertical, Save, FilePlus } from "lucide-react";
 import type { SUPPORTED_LANGUAGES } from "@/models/editor";
 import { Button } from "@/components/ui/button";
 import {
