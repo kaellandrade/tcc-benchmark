@@ -6,6 +6,7 @@ import {
     AlertTriangle
 } from "lucide-react";
 import type {ComplexityCategory} from "@/types/algorithms";
+import {constantTimeSnippets} from "./code-snippets.ts";
 
 export const complexities: ComplexityCategory[] = [
     {
@@ -18,30 +19,18 @@ export const complexities: ComplexityCategory[] = [
         algorithms: [
             {
                 name: "Acesso a Array",
-                description: "Acessar um elemento específico pelo índice (arr[i]).",
-                snippets: {
-                    java: `// Acesso direto em Java\nint[] numeros = {10, 20, 30};\nint x = numeros[1]; // O(1)`,
-                    c: `// Acesso direto em C\nint numeros[] = {10, 20, 30};\nint x = numeros[1]; // O(1)`,
-                    python: `# Acesso direto em Python\nnumeros = [10, 20, 30]\nx = numeros[1] # O(1)`
-                }
+                description: "Acessar um elemento específico pelo índice é instantâneo pois o endereço de memória é calculado diretamente.",
+                snippets: constantTimeSnippets.arrayAccess
             },
             {
                 name: "Verificação Par/Ímpar",
-                description: "Operação aritmética simples usando módulo.",
-                snippets: {
-                    java: `// TODO: Implementar verificação (n % 2 == 0) em Java`,
-                    c: `// TODO: Implementar verificação (n % 2 == 0) em C`,
-                    python: `# TODO: Implementar verificação (n % 2 == 0) em Python`
-                }
+                description: "Determinar se um número é par ou ímpar requer apenas uma operação aritmética simples.",
+                snippets: constantTimeSnippets.checkParity
             },
             {
                 name: "Pilha (Stack) Push/Pop",
-                description: "Inserir ou remover do topo de uma pilha.",
-                snippets: {
-                    java: `// TODO: Implementar Stack.push() em Java`,
-                    c: `// TODO: Implementar Stack Push em C`,
-                    python: `# TODO: Implementar list.append() e pop() em Python`
-                }
+                description: "Inserir ou remover do topo de uma pilha é constante.",
+                snippets: constantTimeSnippets.stackOperations
             }
         ]
     },
