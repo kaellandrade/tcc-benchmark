@@ -1,6 +1,5 @@
 import React from "react";
 import {
-    Code2,
     Swords,
     Info,
     X,
@@ -14,10 +13,11 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet";
-import { useNavigate, useLocation } from "react-router-dom"; // 1. Importar useLocation
-import { cn } from "@/lib/utils"; // Importante para mesclar classes condicionalmente
+import { useNavigate, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 import dcompLabLogHeaderForDark from "@/assets/for-dark/dcomp-lab-log-header-for-dark.png";
 import dcompLabLogHeaderForLight from "@/assets/for-light/dcomp-lab-log-header-for-light.png";
+import { Library } from "lucide-react";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -29,7 +29,7 @@ interface SidebarProps {
 interface MenuItem {
     icon: React.ReactNode;
     label: string;
-    path?: string; // 2. Adicionar propriedade opcional 'path'
+    path?: string;
     onClick?: () => void;
 }
 
@@ -40,29 +40,27 @@ export function Sidebar({
                             isDarkMode,
                         }: SidebarProps) {
     const navigate = useNavigate();
-    const location = useLocation(); // 3. Obter a rota atual
+    const location = useLocation();
 
     // Helper para verificar se a rota está ativa
     const isActive = (path?: string) => {
         if (!path) return false;
-        // Compara a rota exata (ex: "/about") ou se é a home ("/")
         return location.pathname === path;
     };
 
     const menuItems: MenuItem[] = [
         {
-            icon: <Code2 className="size-5" />,
-            label: "Explorar códigos",
-            path: "/", // Associamos a Home a este item
+            icon: <Library className="size-5" />,
+            label: "Algoritmos Clássicos",
+            path: "/algorithms",
             onClick: () => {
-                navigate("/");
+                navigate("/algorithms");
                 onClose();
             }
         },
         {
             icon: <Swords className="size-5" />,
             label: "Lista de desafios",
-            // Sem path por enquanto, pois é funcionalidade futura
             onClick: () => {
                 onClose();
             }
@@ -73,7 +71,7 @@ export function Sidebar({
         {
             icon: <Info className="size-5" />,
             label: "Sobre o DcompLab",
-            path: "/about", // Associamos a rota /about
+            path: "/about",
             onClick: () => {
                 navigate("/about");
                 onClose();
