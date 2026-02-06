@@ -8,6 +8,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { java } from "@codemirror/lang-java";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
+import {dcompLabEditorTema} from "@/config/editorTheme.ts";
 
 interface SnippetBlockProps {
     snippets: {
@@ -80,7 +81,7 @@ export const SnippetBlock = ({ snippets }: SnippetBlockProps) => {
                     value={snippets[activeLang]}
                     height="auto"
                     theme="dark"
-                    extensions={[getExtension(activeLang)]}
+                    extensions={[getExtension(activeLang), dcompLabEditorTema]}
                     editable={false}
                     basicSetup={{
                         lineNumbers: false,
