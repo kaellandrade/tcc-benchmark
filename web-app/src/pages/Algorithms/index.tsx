@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
-import { Clock, TrendingUp, AlertTriangle, Zap, ChevronDown } from "lucide-react";
+import { Clock, TrendingUp, AlertTriangle, Zap, ChevronDown, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { ComplexityCard } from "@/components/algorithms/ComplexityCard";
@@ -37,9 +37,7 @@ export function Algorithms({
             />
 
             <main className="flex-1 overflow-y-auto p-4 md:p-8 md:pt-10">
-                <div className="max-w-4xl mx-auto space-y-8 pb-20">
-
-                    {/* Header da Página */}
+                <div className="max-w-4xl mx-auto space-y-8 pb-10">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2 mb-2">
                             <div className="p-2 rounded-lg bg-primary/10 text-primary">
@@ -55,6 +53,7 @@ export function Algorithms({
                         </p>
                     </div>
 
+                    {/* Cards Explicativos Big O */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                         <div className="bg-card border border-border p-5 rounded-xl shadow-sm hover:border-red-500/50 transition-colors group">
@@ -92,7 +91,7 @@ export function Algorithms({
                             </p>
                             <Button
                                 variant="link"
-                                className="px-0 text-primary mt-2 h-auto font-semibold group"
+                                className="px-0 text-primary mt-2 h-auto font-semibold group cursor-pointer"
                                 onClick={() => window.open("https://www.google.com/search?q=como+calcular+complexidade+de+algoritmo", "_blank")}
                             >
                                 Pesquisar sobre o tema <ChevronDown className="-rotate-90 ml-1 size-3 transition-transform group-hover:translate-x-1" />
@@ -104,6 +103,7 @@ export function Algorithms({
 
                     <div className="h-px bg-border/50" />
 
+                    {/* Lista de Algoritmos */}
                     <div className="space-y-6">
 
                         <div className="space-y-2">
@@ -123,6 +123,29 @@ export function Algorithms({
                             ))}
                         </div>
                     </div>
+
+                    <div className="mt-12 py-6 border-t border-dashed border-border/60 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+                        <div className="space-y-1">
+                            <div className="flex items-center justify-center md:justify-start gap-2 text-foreground/80 font-medium text-sm">
+                                <Github className="size-4" />
+                                <span>Encontrou alguma inconsistência?</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground max-w-lg leading-relaxed">
+                                Este projeto é Open Source e construído pela comunidade acadêmica.
+                                Se você notar algum erro nos códigos ou explicações, sinta-se à vontade para contribuir.
+                            </p>
+                        </div>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="gap-2 text-xs h-8 bg-background/50 hover:text-primary cursor-pointer"
+                            onClick={() => window.open("https://github.com/kaellandrade/tcc-benchmark", "_blank")} // Ajuste o link do repo aqui
+                        >
+                            <Github className="size-3.5" />
+                            Reportar Issue
+                        </Button>
+                    </div>
+
                 </div>
             </main>
         </div>
