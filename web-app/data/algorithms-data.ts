@@ -6,7 +6,12 @@ import {
     AlertTriangle
 } from "lucide-react";
 import type {ComplexityCategory} from "@/types/algorithms";
-import {constantTimeSnippets} from "./code-snippets.ts";
+import {
+    constantTimeSnippets,
+    linearTimeSnippets,
+    logarithmicTimeSnippets, quadraticTimeSnippets,
+    quasilinearTimeSnippets
+} from "./code-snippets.ts";
 
 export const complexities: ComplexityCategory[] = [
     {
@@ -45,20 +50,12 @@ export const complexities: ComplexityCategory[] = [
             {
                 name: "Busca Binária",
                 description: "Encontrar um item em uma lista ordenada dividindo o escopo.",
-                snippets: {
-                    java: `// TODO: Implementar Busca Binária (Binary Search) em Java`,
-                    c: `// TODO: Implementar Busca Binária em C`,
-                    python: `# TODO: Implementar Busca Binária em Python`
-                }
+                snippets: logarithmicTimeSnippets.binarySearch
             },
             {
                 name: "Potenciação Rápida",
                 description: "Calcular x^n dividindo o expoente.",
-                snippets: {
-                    java: `// TODO: Implementar Fast Power em Java`,
-                    c: `// TODO: Implementar Fast Power em C`,
-                    python: `# TODO: Implementar Fast Power em Python`
-                }
+                snippets: logarithmicTimeSnippets.fastPower
             }
         ]
     },
@@ -72,30 +69,18 @@ export const complexities: ComplexityCategory[] = [
         algorithms: [
             {
                 name: "Busca Linear",
-                description: "Verificar cada elemento da lista até encontrar o alvo.",
-                snippets: {
-                    java: `// TODO: Implementar Busca Linear (For Loop) em Java`,
-                    c: `// TODO: Implementar Busca Linear em C`,
-                    python: `# TODO: Implementar Busca Linear em Python`
-                }
+                description: "Verificar cada elemento da lista sequencialmente até encontrar o alvo.",
+                snippets: linearTimeSnippets.linearSearch
             },
             {
                 name: "Soma de Array",
-                description: "Acumular valores percorrendo todos os elementos.",
-                snippets: {
-                    java: `// TODO: Implementar Soma de Array em Java`,
-                    c: `// TODO: Implementar Soma de Array em C`,
-                    python: `# TODO: Implementar sum() manual em Python`
-                }
+                description: "Acumular valores percorrendo todos os elementos da lista.",
+                snippets: linearTimeSnippets.arraySum
             },
             {
                 name: "Verificar Palíndromo",
-                description: "Comparar caracteres de uma string.",
-                snippets: {
-                    java: `// TODO: Implementar Palíndromo em Java`,
-                    c: `// TODO: Implementar Palíndromo em C`,
-                    python: `# TODO: Implementar Palíndromo em Python`
-                }
+                description: "Comparar caracteres das extremidades em direção ao centro (Abordagem Two Pointers).",
+                snippets: linearTimeSnippets.palindromeCheck
             }
         ]
     },
@@ -110,20 +95,12 @@ export const complexities: ComplexityCategory[] = [
             {
                 name: "Merge Sort",
                 description: "Dividir para conquistar: divide a lista e funde ordenando.",
-                snippets: {
-                    java: `// TODO: Implementar Merge Sort em Java`,
-                    c: `// TODO: Implementar Merge Sort em C`,
-                    python: `# TODO: Implementar Merge Sort em Python`
-                }
+                snippets: quasilinearTimeSnippets.mergeSort
             },
             {
                 name: "Quick Sort",
                 description: "Particionamento recursivo (considerando caso médio).",
-                snippets: {
-                    java: `// TODO: Implementar Quick Sort em Java`,
-                    c: `// TODO: Implementar Quick Sort em C`,
-                    python: `# TODO: Implementar Quick Sort em Python`
-                }
+                snippets: quasilinearTimeSnippets.quickSort
             }
         ]
     },
@@ -137,30 +114,18 @@ export const complexities: ComplexityCategory[] = [
         algorithms: [
             {
                 name: "Bubble Sort",
-                description: "Flutua o maior elemento para o topo repetidamente.",
-                snippets: {
-                    java: `// TODO: Implementar Bubble Sort em Java`,
-                    c: `// TODO: Implementar Bubble Sort em C`,
-                    python: `# TODO: Implementar Bubble Sort em Python`
-                }
+                description: "Flutua o maior elemento para o topo repetidamente através de trocas adjacentes.",
+                snippets: quadraticTimeSnippets.bubbleSort
             },
             {
                 name: "Insertion Sort",
-                description: "Insere o elemento atual na posição correta da parte ordenada.",
-                snippets: {
-                    java: `// TODO: Implementar Insertion Sort em Java`,
-                    c: `// TODO: Implementar Insertion Sort em C`,
-                    python: `# TODO: Implementar Insertion Sort em Python`
-                }
+                description: "Constrói a lista ordenada um item de cada vez, inserindo o elemento atual na posição correta.",
+                snippets: quadraticTimeSnippets.insertionSort
             },
             {
                 name: "Multiplicação de Matrizes",
-                description: "Algoritmo ingênuo com triplo loop aninhado.",
-                snippets: {
-                    java: `// TODO: Implementar Multiplicação de Matrizes em Java`,
-                    c: `// TODO: Implementar Multiplicação de Matrizes em C`,
-                    python: `# TODO: Implementar Multiplicação de Matrizes em Python`
-                }
+                description: "Algoritmo clássico com triplo loop aninhado. O custo cresce cubicamente ou quadraticamente dependendo das dimensões.",
+                snippets: quadraticTimeSnippets.matrixMultiplication
             }
         ]
     }
