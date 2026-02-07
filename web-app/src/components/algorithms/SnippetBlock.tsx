@@ -9,6 +9,8 @@ import { java } from "@codemirror/lang-java";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
 import {dcompLabEditorTema} from "@/config/editorTheme.ts";
+import { motion } from "framer-motion";
+import {useNavigate} from "react-router-dom";
 
 interface SnippetBlockProps {
     snippets: {
@@ -19,13 +21,14 @@ interface SnippetBlockProps {
 }
 
 export const SnippetBlock = ({ snippets }: SnippetBlockProps) => {
+    const navigate = useNavigate();
     const [activeLang, setActiveLang] = useState<Language>("java");
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
         navigator.clipboard.writeText(snippets[activeLang]);
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        setTimeout(() => setCopied(false), 3000);
     };
 
     const languages: { id: Language; label: string; color: string }[] = [
@@ -66,14 +69,31 @@ export const SnippetBlock = ({ snippets }: SnippetBlockProps) => {
                     ))}
                 </div>
 
-                <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    className="h-6 w-6 text-slate-400 hover:text-white cursor-pointer"
-                    onClick={handleCopy}
-                >
-                    {copied ? <Check className="size-3.5 text-green-500" /> : <Copy className="size-3.5" />}
-                </Button>
+                <div className="flex items-center gap-2">
+                    {copied && (
+                        <motion.button
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => navigate("/")}
+                            className="text-[10px] bg-green-500/10 text-green-400 px-2 py-1 rounded border border-green-500/20 hover:bg-green-500/20 transition-colors cursor-pointer"
+                        >
+                            Ir testar ➔
+                        </motion.button>
+                    )}
+
+                    <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        className={cn(
+                            "h-6 w-6 transition-colors",
+                            copied ? "text-green-500 hover:text-green-400" : "text-slate-400 hover:text-white"
+                        )}
+                        onClick={handleCopy}
+                    >
+                        {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+                    </Button>
+                </div>
             </div>
 
             <div className="relative group text-sm">

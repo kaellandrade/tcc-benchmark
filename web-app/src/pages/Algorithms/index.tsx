@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 
 import { ComplexityCard } from "@/components/algorithms/ComplexityCard";
 import {complexities} from "../../../data/algorithms-data.ts";
+import { Code2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface AlgorithmsPageProps {
     isSidebarOpen: boolean;
@@ -21,6 +24,7 @@ export function Algorithms({
                                onThemeToggle,
                                isDarkMode,
                            }: AlgorithmsPageProps) {
+    const navigate = useNavigate();
     return (
         <div className="w-screen h-screen flex flex-col bg-background overflow-hidden">
             <Sidebar
@@ -53,7 +57,6 @@ export function Algorithms({
                         </p>
                     </div>
 
-                    {/* Cards Explicativos Big O */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                         <div className="bg-card border border-border p-5 rounded-xl shadow-sm hover:border-red-500/50 transition-colors group">
@@ -103,7 +106,6 @@ export function Algorithms({
 
                     <div className="h-px bg-border/50" />
 
-                    {/* Lista de Algoritmos */}
                     <div className="space-y-6">
 
                         <div className="space-y-2">
@@ -124,7 +126,7 @@ export function Algorithms({
                         </div>
                     </div>
 
-                    <div className="mt-12 py-6 border-t border-dashed border-border/60 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+                    <div className="mt-12 py-6 border-t border-dashed border-border/60 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left  mb-15 lg:mb-0">
                         <div className="space-y-1">
                             <div className="flex items-center justify-center md:justify-start gap-2 text-foreground/80 font-medium text-sm">
                                 <Github className="size-4" />
@@ -139,13 +141,29 @@ export function Algorithms({
                             variant="outline"
                             size="sm"
                             className="gap-2 text-xs h-8 bg-background/50 hover:text-primary cursor-pointer"
-                            onClick={() => window.open("https://github.com/kaellandrade/tcc-benchmark", "_blank")} // Ajuste o link do repo aqui
+                            onClick={() => window.open("https://github.com/kaellandrade/tcc-benchmark", "_blank")}
                         >
                             <Github className="size-3.5" />
                             Reportar Issue
                         </Button>
                     </div>
 
+                </div>
+                <div className="absolute bottom-6 right-6 z-50">
+                    <motion.button
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => navigate("/")}
+                        className="cursor-pointer group flex items-center justify-center gap-2 bg-primary text-primary-foreground font-bold py-3 px-5 rounded-full shadow-lg hover:shadow-primary/40 transition-all"
+                    >
+                        <Code2 className="size-5" />
+                        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap">
+                        Ir para o Editor
+                    </span>
+                        <span className="md:hidden">Editor</span>
+                    </motion.button>
                 </div>
             </main>
         </div>

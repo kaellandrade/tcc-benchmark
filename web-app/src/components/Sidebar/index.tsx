@@ -5,6 +5,7 @@ import {
     X,
     Moon,
     Sun,
+    Code2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +19,7 @@ import { cn } from "@/lib/utils";
 import dcompLabLogHeaderForDark from "@/assets/for-dark/dcomp-lab-log-header-for-dark.png";
 import dcompLabLogHeaderForLight from "@/assets/for-light/dcomp-lab-log-header-for-light.png";
 import { Library } from "lucide-react";
+
 
 interface SidebarProps {
     isOpen: boolean;
@@ -49,6 +51,15 @@ export function Sidebar({
     };
 
     const menuItems: MenuItem[] = [
+        {
+            icon: <Code2 className="size-5" />,
+            label: "Editor de Código",
+            path: "/",
+            onClick: () => {
+                navigate("/");
+                onClose();
+            }
+        },
         {
             icon: <Library className="size-5" />,
             label: "Algoritmos Clássicos",
