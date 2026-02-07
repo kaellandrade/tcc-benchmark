@@ -5,9 +5,7 @@ import { Button } from "@/components/ui/button";
 
 import { ComplexityCard } from "@/components/algorithms/ComplexityCard";
 import {complexities} from "../../../data/algorithms-data.ts";
-import { Code2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import {FabEditor} from "@/components/FABDcompLabEditor";
 
 interface AlgorithmsPageProps {
     isSidebarOpen: boolean;
@@ -24,7 +22,6 @@ export function Algorithms({
                                onThemeToggle,
                                isDarkMode,
                            }: AlgorithmsPageProps) {
-    const navigate = useNavigate();
     return (
         <div className="w-screen h-screen flex flex-col bg-background overflow-hidden">
             <Sidebar
@@ -149,22 +146,7 @@ export function Algorithms({
                     </div>
 
                 </div>
-                <div className="absolute bottom-6 right-6 z-50">
-                    <motion.button
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => navigate("/")}
-                        className="cursor-pointer group flex items-center justify-center gap-2 bg-primary text-primary-foreground font-bold py-3 px-5 rounded-full shadow-lg hover:shadow-primary/40 transition-all"
-                    >
-                        <Code2 className="size-5" />
-                        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap">
-                        Ir para o Editor
-                    </span>
-                        <span className="md:hidden">Editor</span>
-                    </motion.button>
-                </div>
+                <FabEditor />
             </main>
         </div>
     )

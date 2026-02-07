@@ -71,8 +71,10 @@ export function Sidebar({
         },
         {
             icon: <Swords className="size-5"/>,
+            path: "/challenges",
             label: "Lista de desafios",
             onClick: () => {
+                navigate("/challenges");
                 onClose();
             }
         },
