@@ -5,6 +5,7 @@ import { NotFound } from "@/pages/NotFound";
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import {About} from "@/pages/About";
 import {Algorithms} from "@/pages/Algorithms";
+import {Challenges} from "@/pages/Challenges";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -45,6 +46,7 @@ const App = () => {
         <Route path="/about" element={<About {...sharedProps} />} />
         <Route path="/algorithms" element={<Algorithms {...sharedProps} />} />
         <Route path="*" element={<NotFound {...sharedProps} />} />
+        <Route path="/challenges" element={<Challenges {...sharedProps} />} />
       </Routes>
       <SpeedInsights />
     </BrowserRouter>
