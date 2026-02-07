@@ -7,18 +7,18 @@ import {
     Sun,
     Code2
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
     Sheet,
     SheetContent,
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet";
-import { useNavigate, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import {useNavigate, useLocation} from "react-router-dom";
+import {cn} from "@/lib/utils";
 import dcompLabLogHeaderForDark from "@/assets/for-dark/dcomp-lab-log-header-for-dark.png";
 import dcompLabLogHeaderForLight from "@/assets/for-light/dcomp-lab-log-header-for-light.png";
-import { Library } from "lucide-react";
+import {Library} from "lucide-react";
 
 
 interface SidebarProps {
@@ -52,7 +52,7 @@ export function Sidebar({
 
     const menuItems: MenuItem[] = [
         {
-            icon: <Code2 className="size-5" />,
+            icon: <Code2 className="size-5"/>,
             label: "Editor de Código",
             path: "/",
             onClick: () => {
@@ -61,7 +61,7 @@ export function Sidebar({
             }
         },
         {
-            icon: <Library className="size-5" />,
+            icon: <Library className="size-5"/>,
             label: "Algoritmos Clássicos",
             path: "/algorithms",
             onClick: () => {
@@ -70,7 +70,7 @@ export function Sidebar({
             }
         },
         {
-            icon: <Swords className="size-5" />,
+            icon: <Swords className="size-5"/>,
             label: "Lista de desafios",
             onClick: () => {
                 onClose();
@@ -80,7 +80,7 @@ export function Sidebar({
 
     const secondaryItems: MenuItem[] = [
         {
-            icon: <Info className="size-5" />,
+            icon: <Info className="size-5"/>,
             label: "Sobre o DcompLab",
             path: "/about",
             onClick: () => {
@@ -139,7 +139,7 @@ export function Sidebar({
                                 : "text-primary hover:bg-primary/10 cursor-pointer"
                         }
                     >
-                        <X className="size-6" />
+                        <X className="size-6"/>
                     </Button>
 
                     <SheetTitle className="m-0 flex items-center justify-center">
@@ -165,9 +165,9 @@ export function Sidebar({
                         }
                     >
                         {isDarkMode ? (
-                            <Moon className="size-5" />
+                            <Moon className="size-5"/>
                         ) : (
-                            <Sun className="size-5" />
+                            <Sun className="size-5"/>
                         )}
                     </Button>
                 </SheetHeader>
@@ -185,7 +185,7 @@ export function Sidebar({
                             {menuItems.map((item, index) => renderMenuItem(item, index))}
                         </ul>
 
-                        <div className="my-4 border-t border-dashed border-foreground/10" />
+                        <div className="my-4 border-t border-dashed border-foreground/10"/>
 
                         {/* Lista Secundária */}
                         <ul className="space-y-2">
@@ -194,7 +194,9 @@ export function Sidebar({
                     </nav>
 
                     <footer className="px-4 py-4 border-t border-foreground/10 flex justify-center">
-                        <div className="flex items-center gap-2 text-muted-foreground text-paragraph-small cursor-pointer">
+                        <div
+                            onClick={() => window.open("https://github.com/kaellandrade/tcc-benchmark", "_blank")}
+                            className="flex items-center gap-2 text-muted-foreground text-paragraph-small cursor-pointer">
                             <img
                                 src={
                                     isDarkMode
@@ -204,7 +206,9 @@ export function Sidebar({
                                 alt="Logo DcompLab"
                                 className="h-3 w-auto object-contain"
                             />
-                            <span className="underline underline-offset-8">0.1</span>
+                            <span className="underline underline-offset-8">
+                                v{import.meta.env.PACKAGE_VERSION}
+                            </span>
                         </div>
                     </footer>
                 </div>
