@@ -2,6 +2,7 @@ import { Logs, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dcompLabLogHeaderForDark from "@/assets/for-dark/dcomp-lab-log-header-for-dark.png";
 import dcompLabLogHeaderForLight from "@/assets/for-light/dcomp-lab-log-header-for-light.png";
+import {useNavigate} from "react-router-dom";
 
 interface HeaderProps {
     onMenuClick?: () => void;
@@ -14,6 +15,8 @@ export function Header({
                            onThemeToggle,
                            isDarkMode = true,
 }: HeaderProps) {
+    const navigate = useNavigate();
+
     return (
         <header
             className={`relative z-10 flex items-center justify-between px-4 py-1 transition-colors duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.25)] ${
@@ -41,7 +44,8 @@ export function Header({
                         : dcompLabLogHeaderForLight
                 }
                 alt="Logo DcompLab"
-                className="h-5 w-auto object-contain"
+                className="h-5 w-auto object-contain cursor-pointer"
+                onClick={() => navigate("/")}
             />
             <Button
                 variant="ghost"

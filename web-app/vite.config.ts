@@ -4,9 +4,13 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import {VitePWA} from 'vite-plugin-pwa'
 import {nodePolyfills} from 'vite-plugin-node-polyfills'
+import packageJson from './package.json'
 
 // https://vite.dev/config/
 export default defineConfig({
+    define:{
+        'import.meta.env.PACKAGE_VERSION': JSON.stringify(packageJson.version)
+    },
     plugins: [
         react(),
         tailwindcss(),
