@@ -43,7 +43,7 @@ print(f"Valor: {x}")`
     public static void main(String[] args) {
         int n = 1024;
         if (isPar(n)) {
-            System.out.println(n + " é par.");
+            System.out.println(n + " e par.");
         }
     }
 }`,
@@ -58,7 +58,7 @@ int isPar(int n) {
 int main() {
     int n = 1024;
     if (isPar(n)) {
-        printf("%d é par.", n);
+        printf("%d e par.", n);
     }
     return 0;
 }`,
@@ -69,7 +69,7 @@ def is_par(n):
 
 n = 1024
 if is_par(n):
-    print(f"{n} é par.")`
+    print(f"{n} e par.")`
     },
 
     stackOperations: {
@@ -164,9 +164,9 @@ export const logarithmicTimeSnippets = {
         int resultado = binarySearch(numeros, alvo);
         
         if (resultado != -1)
-            System.out.println("Elemento encontrado no índice: " + resultado);
+            System.out.println("Elemento encontrado no indice: " + resultado);
         else
-            System.out.println("Elemento não encontrado.");
+            System.out.println("Elemento nao encontrado.");
     }
 }`,
         c: `#include <stdio.h>
@@ -202,9 +202,9 @@ int main() {
     int resultado = binarySearch(numeros, n, alvo);
     
     if (resultado != -1)
-        printf("Elemento encontrado no índice: %d", resultado);
+        printf("Elemento encontrado no indice: %d", resultado);
     else
-        printf("Elemento não encontrado.");
+        printf("Elemento nao encontrado.");
         
     return 0;
 }`,
@@ -236,9 +236,9 @@ alvo = 23
 resultado = binary_search(numeros, alvo)
 
 if resultado != -1:
-    print(f"Elemento encontrado no índice: {resultado}")
+    print(f"Elemento encontrado no indice: {resultado}")
 else:
-    print("Elemento não encontrado.")`
+    print("Elemento nao encontrado.")`
     },
 
     fastPower: {
@@ -292,7 +292,7 @@ int main() {
     long long base = 2;
     long long expoente = 10;
     
-    printf("Resultado: %lld", fastPower(base, expoente));
+    printf("Resultado: %d", fastPower(base, expoente));
     return 0;
 }`,
         python: `# Potenciação Rápida
@@ -338,7 +338,7 @@ export const linearTimeSnippets = {
         int alvo = 30;
         
         int idx = buscaLinear(numeros, alvo);
-        System.out.println("Índice encontrado: " + idx);
+        System.out.println("Indice encontrado: " + idx);
     }
 }`,
         c: `#include <stdio.h>
@@ -360,7 +360,7 @@ int main() {
     int alvo = 30;
     
     int idx = buscaLinear(numeros, n, alvo);
-    printf("Índice encontrado: %d", idx);
+    printf("Indice encontrado: %d", idx);
     return 0;
 }`,
         python: `# Busca Linear
@@ -375,7 +375,7 @@ numeros = [10, 50, 30, 70, 80, 20]
 alvo = 30
 
 idx = busca_linear(numeros, alvo)
-print(f"Índice encontrado: {idx}")`
+print(f"Indice encontrado: {idx}")`
     },
 
     arraySum: {
@@ -439,7 +439,7 @@ print(f"Soma total: {soma}")`
 
     public static void main(String[] args) {
         String palavra = "arara";
-        System.out.println(palavra + " é palíndromo? " + isPalindrome(palavra));
+        System.out.println(palavra + " e palindromo? " + isPalindrome(palavra));
     }
 }`,
         c: `#include <stdio.h>
@@ -464,9 +464,9 @@ int isPalindrome(char str[]) {
 int main() {
     char palavra[] = "arara";
     if (isPalindrome(palavra))
-        printf("%s é palíndromo.", palavra);
+        printf("%s e palindromo.", palavra);
     else
-        printf("%s não é palíndromo.", palavra);
+        printf("%s nao e palindromo.", palavra);
         
     return 0;
 }`,
@@ -484,7 +484,7 @@ def is_palindrome(s):
     return True
 
 palavra = "arara"
-print(f"{palavra} é palíndromo? {is_palindrome(palavra)}")`
+print(f"{palavra} e palindromo? {is_palindrome(palavra)}")`
     }
 };
 
