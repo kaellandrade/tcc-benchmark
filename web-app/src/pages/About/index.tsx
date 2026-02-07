@@ -44,9 +44,7 @@ const containerVariants: Variants = {
     visible: {
         opacity: 1,
         transition: {
-
             delayChildren: 0.2,
-
             staggerChildren: 0.15,
         },
     },
@@ -95,11 +93,11 @@ export function About({
 
             <GridBackground />
 
-            <main className="flex-1 flex flex-col items-center justify-start pt-24 pb-10 px-6 overflow-y-auto md:justify-center md:pt-0 md:pb-0 relative z-10">
 
+            <main className="flex-1 w-full overflow-y-auto pt-24 pb-12 px-6 relative z-10 scroll-smooth">
 
                 <motion.div
-                    className="flex flex-col items-center max-w-4xl w-full gap-8"
+                    className="flex flex-col items-center max-w-4xl w-full gap-8 mx-auto"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
@@ -117,7 +115,7 @@ export function About({
                                 <img
                                     src={logoDcomp}
                                     alt="Logo DcompLab"
-                                    className="size-40 md:size-40 rounded-full shadow-2xl hover:shadow-primary/40 transition-shadow duration-300"
+                                    className="size-32 md:size-40 rounded-full shadow-2xl hover:shadow-primary/40 transition-shadow duration-300"
                                 />
                             </motion.div>
                         </motion.div>
@@ -126,20 +124,20 @@ export function About({
                         <motion.div className="space-y-4" variants={itemVariants}>
                             <h1 className="text-heading-small font-bold text-foreground">
                                 Sobre o{" "}
-                            <motion.span
-                                className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-tertiary via-primary to-tertiary bg-[length:200%_auto]"
-                                animate={{
-                                    backgroundPosition: ["0% center", "-200% center"],
-                                }}
-                                transition={{
-                                    duration: 6,
-                                    repeat: Infinity,
-                                    ease: "linear",
-                                }}
-                            >
-                                {`{DcompLab}`}
-                            </motion.span>
-                        </h1>
+                                <motion.span
+                                    className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-tertiary via-primary to-tertiary bg-[length:200%_auto]"
+                                    animate={{
+                                        backgroundPosition: ["0% center", "-200% center"],
+                                    }}
+                                    transition={{
+                                        duration: 6,
+                                        repeat: Infinity,
+                                        ease: "linear",
+                                    }}
+                                >
+                                    {`{DcompLab}`}
+                                </motion.span>
+                            </h1>
 
                             <p className="text-paragraph text-muted-foreground max-w-2xl text-center leading-relaxed px-2 mx-auto">
                                 O DcompLab é uma IDE multilinguagem baseada em WebAssembly e PWA,
@@ -168,7 +166,7 @@ export function About({
                                 )}
                             >
                                 <div className="size-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-4 ring-2 ring-background">
-                                    <img src={dev.img} alt={dev.name} className="rounded-full"/>
+                                    <img src={dev.img} alt={dev.name} className="rounded-full w-full h-full object-cover"/>
                                 </div>
 
                                 <h2 className="text-subtitle font-bold text-foreground">{dev.name}</h2>
@@ -182,7 +180,7 @@ export function About({
                                     <span>{dev.course}</span>
                                 </div>
 
-                                <div className="flex gap-3 w-full">
+                                <div className="flex gap-3 w-full mt-auto">
                                     <Button
                                         variant="outline"
                                         size="sm"
@@ -206,11 +204,11 @@ export function About({
                         ))}
                     </motion.div>
 
-                    <motion.div variants={itemVariants}>
+                    <motion.div variants={itemVariants} className="pb-8">
                         <Button
                             variant="outline"
                             onClick={() => navigate("/")}
-                            className="mt-4 gap-2 hover:text-primary mb-8 md:mb-0 underline-offset-4 cursor-pointer"
+                            className="mt-4 gap-2 hover:text-primary underline-offset-4 cursor-pointer"
                         >
                             <ArrowLeft className="size-4" />
                             Voltar para o Editor

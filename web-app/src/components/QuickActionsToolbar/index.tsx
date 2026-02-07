@@ -149,7 +149,7 @@ export function QuickActionsToolbar({ view }: QuickActionsToolbarProps) {
         <>
             {/* Botão Flutuante */}
             <div className={cn(
-                "fixed bottom-2 right-4 z-50 transition-all duration-300 ease-in-out",
+                "absolute bottom-2 right-4 z-50 transition-all duration-300 ease-in-out",
                 !isOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-0 pointer-events-none"
             )}>
                 <Button onClick={() => setIsOpen(true)} onMouseDown={preventFocusSteal} size="icon-sm" className="h-10 w-10 rounded-full shadow-xl bg-primary text-primary-foreground hover:bg-primary/90">
